@@ -4,5 +4,5 @@ import sys
 
 from enular_main import *
 
-x = Test()
-x.printy()
+x = Evaluate(7)
+x.print_results()
