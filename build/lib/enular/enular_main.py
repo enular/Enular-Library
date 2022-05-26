@@ -3,7 +3,7 @@ import os
 import sys
 import backtrader as bt
 
-from import_test import *
+from enular.import_test import *
 
 if __name__ == '__main__':
     print ('Do not run this file.')

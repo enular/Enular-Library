@@ -1,0 +1,24 @@
+Metadata-Version: 2.1
+Name: enular
+Version: 0.1.1
+Summary: Enular Library
+Home-page: https://enular.com
+Author: Adrian Wong
+Author-email: adrian@enular.com
+License: MIT
+Description: # Enular Library
+         
+        pip install enular
+        
+        The Enular Library contains code for backtesting, evaluating and visualising algorithmic trading strategies. It also provides indicators, data sources, and paper trading capabilities. Documentation coming soon.
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
