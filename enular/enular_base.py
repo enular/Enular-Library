@@ -3,8 +3,10 @@ from __future__ import (absolute_import, division, print_function,
 
 #!/usr/bin/env python
 import os
+import io
 import sys
 
+from datetime import date, datetime
 import matplotlib
 import yfinance
 import numpy
@@ -77,14 +79,12 @@ class Feed:
 
 from backtrader.utils.py3 import (urlopen, urlquote, ProxyHandler, build_opener,
                          install_opener)
-from datetime import date, datetime
 import collections
-import io
 import itertools
 from backtrader import feed
 from backtrader.utils import date2num
 
-class YahooFinanceData(bt.feeds.YahooFinanceData):
+class YahooData(bt.feeds.YahooFinanceData):
 
     def start_v7(self):
         try:
