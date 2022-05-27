@@ -2,24 +2,31 @@
 import os
 import sys
 
+import requests
 import matplotlib
-import datetime
+from datetime import datetime
 import backtrader as bt
-from strategies import *
+import yfinance as yf
 #from screener import *
 
 import enular
 
 # Instantiate Cerebro engine
-cerebro = bt.Cerebro(optreturn=False)
-#cerebro = enular.EnularEngine
+#cerebro = bt.Cerebro(optreturn=False)
+cerebro = enular.Engine()
 
 # Set data parameters and add to Cerebro
-data = bt.feeds.YahooFinanceCSVData(
-    dataname='TSLA.csv',
-    fromdate=datetime.datetime(2016, 1, 1),
-    todate=datetime.datetime(2021, 12, 25),
-)
+#data = bt.feeds.YahooFinanceCSVData(
+#    dataname='TSLA.csv',
+#    fromdate=datetime.datetime(2016, 1, 1),
+#    todate=datetime.datetime(2021, 12, 25),
+#)
+
+#data = bt.feeds.PandasData(dataname=yf.download('TSLA','2017-01-01','2019-01-01'))
+
+data = enular.YahooFinanceData(dataname='TSLA', fromdate=datetime
+        (2017, 1, 1), todate=datetime(2019, 1, 1))
+
 # settings for out-of-sample data
 # fromdate=datetime.datetime(2018, 1, 1),
 # todate=datetime.datetime(2019, 12, 25))
@@ -42,11 +49,16 @@ cerebro.adddata(data)
 
 
 # Default position size
-cerebro.addsizer(bt.sizers.SizerFix, stake=3)
+#cerebro.addsizer(bt.sizers.SizerFix, stake=3)
+
+if __name__ == '__main__' and sys.argv[1] == 'test':
+    cerebro.run()
+    cerebro.plot()
+
 
 if __name__ == '__main__' and sys.argv[1] == 'run':
 
-    cerebro.addstrategy(MAcrossover)
+    cerebro.addstrategy(enular.MAcrossover)
 
     start_portfolio_value = cerebro.broker.getvalue()
 
