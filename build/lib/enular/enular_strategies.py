@@ -17,6 +17,8 @@ class MAcrossover(Strategy):
     # Moving average parameters
     params = (('pfast',20),('pslow',60),)
 
+
+
     def __init__(self):
         self.dataclose = self.datas[0].close
         

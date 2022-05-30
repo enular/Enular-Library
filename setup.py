@@ -21,7 +21,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://enular.com",
-    author="Adrian Wong",
+    author="Adrian Chun Pang Wong, Dylan Fitzsimmons",
     author_email="adrian@enular.com",
     license="MIT",
     classifiers=[
@@ -37,5 +37,5 @@ setup(
     ],
     packages=["enular"],
     include_package_data=True,
-    install_requires=["numpy","backtrader"]
+    install_requires=["datetime","backtrader"]
 )
