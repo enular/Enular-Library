@@ -18,6 +18,8 @@ class MovingAverageSimple(bt.indicators.MovingAverageSimple):
 class CrossOver(bt.indicators.CrossOver):
     pass
 
-class CustomIndicator(Indicator):
+#Custom indicators that inherit from the Indicator base class
+class CustomIndicator(Indicator):    
     
-    pass
+    def init(self, model, data):
+        pass
