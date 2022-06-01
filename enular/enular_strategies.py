@@ -65,7 +65,7 @@ class MAcrossover(Strategy):
                 self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
                 self.order = self.close()
 
-class AverageTrueRange(bt.Strategy):
+class AverageTrueRange(Strategy):
 
 	def log(self, txt, dt=None):
 		dt = dt or self.datas[0].datetime.date(0)
@@ -85,21 +85,14 @@ class AverageTrueRange(bt.Strategy):
 
 		self.log(f'Close: {self.dataclose[0]:.2f}, ATR: {ATR:.4f}')
 
-class MachineLearningClassify(bt.Strategy):
-    
-
-
+class CustomStrategy(Strategy):
     pass
 
-
-class MachineLearningRegression(bt.Strategy):
-    
-
-    
-
-        
-
+class MachineLearningClassify(Strategy):
     pass
 
-class MachineLearningReinforcement(bt.Strategy):
+class MachineLearningRegression(Strategy):
+    pass
+
+class MachineLearningReinforcement(Strategy):
     pass

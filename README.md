@@ -14,3 +14,5 @@ Notes:
 - Additional strategies
 - Machine learning
 - Improved plotting
+- Multiple buy and sell orders
+- Shorting capability

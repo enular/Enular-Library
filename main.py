@@ -13,35 +13,30 @@ import webbrowser
 
 import enular
 
-#Instantiate enular engine
-ee = enular.Engine(optreturn = False)
+ee = enular.Cerebro(optreturn = False)
 
 #data = bt.feeds.PandasData(dataname=yf.download('TSLA','2017-01-01','2019-01-01'))
 data = enular.YahooData(dataname='TSLA', fromdate=datetime(2017, 1, 1), todate=datetime(2022, 1, 1))
+
 ee.adddata(data)
 
-#enular.Train(data, algorithm = 'dtc', filename="gg")
-
-
-
-# Default position size
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
-    ee.run()
-    ee.plot()
+    print(data)
+    #ee.run()
+    #ee.plot()
 
 
 if __name__ == '__main__' and sys.argv[1] == 'run':
 
     ee.addstrategy(enular.MAcrossover, pfast=10)
 
-    start_portfolio_value = ee.broker.getvalue()
-
     ee.addanalyzer(bt.analyzers.PyFolio, _name='PyFolio')
 
+    start_portfolio_value = ee.broker.getvalue()
+
     results = ee.run()
-    
 
     end_portfolio_value = ee.broker.getvalue()
     pnl = end_portfolio_value - start_portfolio_value
@@ -49,12 +44,13 @@ if __name__ == '__main__' and sys.argv[1] == 'run':
     print(f'Final Portfolio Value: {end_portfolio_value:2f}')
     print(f'PnL: {pnl:.2f}')
 
-    ee.quantstats(results)
-    ee.plot()
+    #ee.quantstats(results)
+    #ee.plot()
 
 if __name__ == '__main__' and sys.argv[1] == 'optimise':
 
     ee.addanalyzer(bt.analyzers.SharpeRatio, _name='sharpe_ratio')
+
     ee.optstrategy(enular.MAcrossover, pfast=range(5, 25), pslow=range(50, 100))
 
     optimized_runs = ee.run()
@@ -69,6 +65,7 @@ if __name__ == '__main__' and sys.argv[1] == 'optimise':
 
     sort_by_sharpe = sorted(final_results_list, key=lambda x: x[3], 
                              reverse=True)
+    
     for line in sort_by_sharpe[:5]:
         print(line)
 
