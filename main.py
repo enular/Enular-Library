@@ -11,9 +11,9 @@ import pandas as pd
 import quantstats
 import webbrowser
 
-import enular
+import enular 
 
-ee = enular.Cerebro(optreturn = False)
+ee = bt.Cerebro(optreturn = False)
 
 #data = bt.feeds.PandasData(dataname=yf.download('TSLA','2017-01-01','2019-01-01'))
 data = enular.YahooData(dataname='TSLA', fromdate=datetime(2017, 1, 1), todate=datetime(2022, 1, 1))

@@ -16,12 +16,12 @@ with open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
 # This call to setup() does all the work
 setup(
     name="enular",
-    version="0.1.2",
+    version="0.1.4",
     description="Enular Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://enular.com",
-    author="Adrian Chun Pang Wong, Dylan Fitzsimmons",
+    author="Adrian Chun Pang Wong, Dylan Fitzsimmons, Enular Limited",
     author_email="adrian@enular.com",
     license="MIT",
     classifiers=[

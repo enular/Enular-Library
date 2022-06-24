@@ -2,17 +2,25 @@
  
 pip install enular
 
+NOTE: Pre-release and development in progress. Expect launch end of 2022.
+
 The Enular Library contains code for backtesting, evaluating and visualising algorithmic trading strategies. It also provides indicators, data sources, and paper trading capabilities. Documentation coming soon. Enular.com
 
-Notes:
-- Based on BackTrader
+Details:
+- Extends Backtrader
 - Includes fixes from BackTrader 2
-- Doucmentation incoming
-- Forum incoming
-- Articles incoming
-- Additional indicators
-- Additional strategies
-- Machine learning
-- Improved plotting
-- Multiple buy and sell orders
-- Shorting capability
+- Data sourced from Yahoo Finance
+- Live trading via IB
+- Accessibility improvements
+
+In progress:
+- Indicator library
+- Strategies library
+- Bug fixes
+- Articles to show how Enular fits in with Backtrader, aims, vision
+- Strategy template and how to use indicators, requirements, data, assets A to Z, references to backtrader
+- Documentation
+- Machine learning capabities
+- Articles about ML capabilities
+- Forum
+- Data feed improvements
