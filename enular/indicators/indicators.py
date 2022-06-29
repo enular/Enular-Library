@@ -10,16 +10,21 @@ import sklearn
 import pandas
 import backtrader as bt
 
-from enular.enular_base import *
+import enular
+
+class Dummy(enular.Indicator):    
+    
+    pass
 
 class MovingAverageSimple(bt.indicators.MovingAverageSimple):
+    
     pass
 
 class CrossOver(bt.indicators.CrossOver):
     pass
 
 #Custom indicators that inherit from the Indicator base class
-class CustomIndicator(Indicator):    
+class CustomIndicator(enular.Indicator):    
     
     def init(self, model, data):
         pass

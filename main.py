@@ -13,7 +13,7 @@ import webbrowser
 
 import enular 
 
-ee = bt.Cerebro(optreturn = False)
+ee = enular.Cerebro(optreturn = False)
 
 #data = bt.feeds.PandasData(dataname=yf.download('TSLA','2017-01-01','2019-01-01'))
 data = enular.YahooData(dataname='TSLA', fromdate=datetime(2017, 1, 1), todate=datetime(2022, 1, 1))
@@ -23,14 +23,13 @@ ee.adddata(data)
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
-    print(data)
-    #ee.run()
-    #ee.plot()
+    ee.addstrategy(enular.strategies.CustomStrategy)
+    print("ok")
 
 
 if __name__ == '__main__' and sys.argv[1] == 'run':
 
-    ee.addstrategy(enular.MAcrossover, pfast=10)
+    ee.addstrategy(enular.strategies.MAcrossover, pfast=10)
 
     ee.addanalyzer(bt.analyzers.PyFolio, _name='PyFolio')
 
@@ -44,14 +43,14 @@ if __name__ == '__main__' and sys.argv[1] == 'run':
     print(f'Final Portfolio Value: {end_portfolio_value:2f}')
     print(f'PnL: {pnl:.2f}')
 
-    #ee.quantstats(results)
-    #ee.plot()
+    ee.quantstats(results)
+    ee.plot()
 
 if __name__ == '__main__' and sys.argv[1] == 'optimise':
 
     ee.addanalyzer(bt.analyzers.SharpeRatio, _name='sharpe_ratio')
 
-    ee.optstrategy(enular.MAcrossover, pfast=range(5, 25), pslow=range(50, 100))
+    ee.optstrategy(enular.strategies.MAcrossover, pfast=range(5, 25), pslow=range(50, 100))
 
     optimized_runs = ee.run()
 

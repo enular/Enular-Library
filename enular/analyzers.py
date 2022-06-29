@@ -3,7 +3,7 @@ import os
 import sys
 
 import backtrader as bt
-from enular.enular_base import *
+from enular.base import *
 
 class Screener_SMA(Analyzer):
     params = (('period',20), ('devfactor',2),)

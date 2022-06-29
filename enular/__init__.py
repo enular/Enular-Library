@@ -1,4 +1,7 @@
-from enular.enular_base import *
-from enular.enular_strategies import *
-from enular.enular_indicators import *
-from enular.enular_analyzers import *
+from .base import *
+from .analyzers import *
+
+from . import indicators as indicators
+from . import strategies as strategies
+
+
