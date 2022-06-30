@@ -105,7 +105,7 @@ class Strategy(bt.Strategy):
     pass
 
 class Indicator(bt.Indicator):
-    pass
+    params = (('something',10),)
 
 class Order(bt.order.Order):
     pass

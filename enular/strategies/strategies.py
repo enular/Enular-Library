@@ -13,7 +13,7 @@ import sklearn
 
 import enular
 
-class CustomStrategy():
+class CustomStrategy(enular.Strategy):
     
     params = (
         ('indicator_a',enular.indicators.Dummy),
@@ -31,6 +31,11 @@ class CustomStrategy():
         self.indicator_a = self.params.indicator_a(self.datas[0])
         self.indicator_b = self.params.indicator_b(self.datas[0])
 
+        #self.indicator_a = enular.indicators.MovingAverageSimple(self.datas[0],period=20)
+        #self.indicator_b = enular.indicators.MovingAverageSimple(self.datas[0],period=52)
+
+        print(self.indicator_a)
+
     def next(self):
 	# Check for open orders
         if self.order:
@@ -40,15 +45,12 @@ class CustomStrategy():
         if not self.position:
             # We are not in the market, look for a signal to OPEN trades
                 
-            #If the 20 SMA is above the 50 SMA
-            #if self.fast_sma[0] > self.slow_sma[0] and self.fast_sma[-1] < self.slow_sma[-1]:
-            if self.indicator_a > 0: # Fast ma crosses above slow ma
+            if self.indicator_a[0] > self.indicator_b[0] and self.indicator_a[-1] < self.indicator_b[-1]:
                 self.log(f'BUY CREATE {self.dataclose[0]:2f}')
                 # Keep track of the created order to avoid a 2nd order
                 self.order = self.buy()
-            #Otherwise if the 20 SMA is below the 50 SMA   
-            #elif self.fast_sma[0] < self.slow_sma[0] and self.fast_sma[-1] > self.slow_sma[-1]:
-            elif self.indicator_b < 0: # Fast ma crosses below slow ma
+             
+            elif self.indicator_a[0] < self.indicator_b[0] and self.indicator_a[-1] > self.indicator_b[-1]:
                 self.log(f'SELL CREATE {self.dataclose[0]:2f}')
                 # Keep track of the created order to avoid a 2nd order
                 self.order = self.sell()
@@ -79,6 +81,8 @@ class MAcrossover(enular.Strategy):
                             period=self.params.pslow)
             self.fast_sma = enular.indicators.MovingAverageSimple(self.datas[0], 
                             period=self.params.pfast)
+
+        print(self.fast_sma)
 
         self.crossover = bt.indicators.CrossOver(self.fast_sma, self.slow_sma)
     

@@ -23,13 +23,27 @@ ee.adddata(data)
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
-    ee.addstrategy(enular.strategies.CustomStrategy)
-    print("ok")
+    
+    ee.addstrategy(enular.strategies.CustomStrategy, indicator_a = bt.indicators.MovingAverageSimple, indicator_b = enular.indicators.CustomMASlow)
+    
+    ee.addanalyzer(bt.analyzers.PyFolio, _name='PyFolio')
 
+    start_portfolio_value = ee.broker.getvalue()
+
+    results = ee.run()
+
+    end_portfolio_value = ee.broker.getvalue()
+    pnl = end_portfolio_value - start_portfolio_value
+    print(f'Starting Portfolio Value: {start_portfolio_value:2f}')
+    print(f'Final Portfolio Value: {end_portfolio_value:2f}')
+    print(f'PnL: {pnl:.2f}')
+
+    #ee.quantstats(results)
+    ee.plot()
 
 if __name__ == '__main__' and sys.argv[1] == 'run':
 
-    ee.addstrategy(enular.strategies.MAcrossover, pfast=10)
+    ee.addstrategy(enular.strategies.MAcrossover)
 
     ee.addanalyzer(bt.analyzers.PyFolio, _name='PyFolio')
 
@@ -43,7 +57,7 @@ if __name__ == '__main__' and sys.argv[1] == 'run':
     print(f'Final Portfolio Value: {end_portfolio_value:2f}')
     print(f'PnL: {pnl:.2f}')
 
-    ee.quantstats(results)
+    #ee.quantstats(results)
     ee.plot()
 
 if __name__ == '__main__' and sys.argv[1] == 'optimise':
