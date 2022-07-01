@@ -22,6 +22,8 @@ class CustomMAFast(bt.indicators.MovingAverageSimple):
 class CustomMASlow(bt.indicators.MovingAverageSimple):
     params = (('period',52),)
 
+
+
 class MovingAverageSimple(bt.indicators.MovingAverageSimple):
 
     pass

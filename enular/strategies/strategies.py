@@ -18,6 +18,9 @@ class CustomStrategy(enular.Strategy):
     params = (
         ('indicator_a',enular.indicators.Dummy),
         ('indicator_b',enular.indicators.Dummy),
+        ('a_param', 999),
+        ('a_param', 999),
+
     )
 
     def __init__(self):
