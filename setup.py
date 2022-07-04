@@ -16,7 +16,7 @@ with open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
 # This call to setup() does all the work
 setup(
     name="enular",
-    version="0.1.4",
+    version="0.1.5",
     description="Enular Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -37,5 +37,5 @@ setup(
     ],
     packages=["enular"],
     include_package_data=True,
-    install_requires=["datetime","backtrader"]
+    install_requires=["backtrader"]
 )

@@ -44,6 +44,18 @@ class CustomStrategy(enular.Strategy):
         if self.order:
             return
 
+
+        #
+        #
+        #
+        #
+        #
+        # INDICATORS NEED TO BE BOOLEAN, NOT SCALED TO ANYTHING
+        # Pass through dictionary.
+        #
+        #
+        #
+
         # Check if we are in the market
         if not self.position:
             # We are not in the market, look for a signal to OPEN trades
