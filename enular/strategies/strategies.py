@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
 import sys
-
 import matplotlib
 import yfinance
 import numpy
@@ -13,64 +12,42 @@ import sklearn
 
 import enular
 
-class CustomStrategy(enular.Strategy):
+# INDICATORS NEED TO BE BOOLEAN, NOT SCALED TO ANYTHING
+# Pass through dictionary as argument.
+
+class CustomStrategyTest(enular.Strategy):
     
     params = (
         ('indicator_a',enular.indicators.Dummy),
         ('indicator_b',enular.indicators.Dummy),
         ('a_param', 999),
         ('a_param', 999),
-
     )
 
     def __init__(self):
-        self.dataclose = self.datas[0].close
-        
-        # Order variable will contain ongoing order details/status
-        self.order = None
 
-        # Instantiate moving averages
+        self.dataclose = self.datas[0].close
+        self.order = None
 
         self.indicator_a = self.params.indicator_a(self.datas[0])
         self.indicator_b = self.params.indicator_b(self.datas[0])
 
-        #self.indicator_a = enular.indicators.MovingAverageSimple(self.datas[0],period=20)
-        #self.indicator_b = enular.indicators.MovingAverageSimple(self.datas[0],period=52)
-
-        print(self.indicator_a)
-
     def next(self):
-	# Check for open orders
+
         if self.order:
             return
 
-
-        #
-        #
-        #
-        #
-        #
-        # INDICATORS NEED TO BE BOOLEAN, NOT SCALED TO ANYTHING
-        # Pass through dictionary.
-        #
-        #
-        #
-
-        # Check if we are in the market
         if not self.position:
-            # We are not in the market, look for a signal to OPEN trades
                 
             if self.indicator_a[0] > self.indicator_b[0] and self.indicator_a[-1] < self.indicator_b[-1]:
                 self.log(f'BUY CREATE {self.dataclose[0]:2f}')
-                # Keep track of the created order to avoid a 2nd order
                 self.order = self.buy()
              
             elif self.indicator_a[0] < self.indicator_b[0] and self.indicator_a[-1] > self.indicator_b[-1]:
                 self.log(f'SELL CREATE {self.dataclose[0]:2f}')
-                # Keep track of the created order to avoid a 2nd order
                 self.order = self.sell()
         else:
-            # We are already in the market, look for a signal to CLOSE trades
+            
             if len(self) >= (self.bar_executed + 5):
                 self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
                 self.order = self.close()

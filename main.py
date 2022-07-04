@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
 import sys
-
 import requests
 import matplotlib
 from datetime import datetime
@@ -17,7 +16,6 @@ ee = enular.Cerebro(optreturn = False)
 
 #data = bt.feeds.PandasData(dataname=yf.download('TSLA','2017-01-01','2019-01-01'))
 data = enular.YahooData(dataname='TSLA', fromdate=datetime(2017, 1, 1), todate=datetime(2022, 1, 1))
-
 ee.adddata(data)
 
 ee.addsizer(bt.sizers.SizerFix, stake=3)
@@ -26,8 +24,6 @@ if __name__ == '__main__' and sys.argv[1] == 'test':
     
     ee.addstrategy(enular.strategies.CustomStrategy, indicator_a = bt.indicators.MovingAverageSimple, indicator_b = enular.indicators.CustomMASlow)
     
-    ee.addanalyzer(bt.analyzers.PyFolio, _name='PyFolio')
-
     start_portfolio_value = ee.broker.getvalue()
 
     results = ee.run()
@@ -37,9 +33,6 @@ if __name__ == '__main__' and sys.argv[1] == 'test':
     print(f'Starting Portfolio Value: {start_portfolio_value:2f}')
     print(f'Final Portfolio Value: {end_portfolio_value:2f}')
     print(f'PnL: {pnl:.2f}')
-
-    #ee.quantstats(results)
-    ee.plot()
 
 if __name__ == '__main__' and sys.argv[1] == 'run':
 
