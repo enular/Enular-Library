@@ -26,10 +26,17 @@ ee.addsizer(bt.sizers.SizerFix, stake=3)
 class CustomMASlowWrapper(enular.indicators.CustomMASlow):
     params = (('period',50),)
 
+class CustomScalarToBoolWrapper(enular.indicators.CustomScalarToBool):
+    params = (('indicator_a',enular.indicators.CustomMAFast),('indicator_b',CustomMASlowWrapper),)
+
+class CustomBoolToBoolAndWrapper(enular.indicators.CustomBoolToBoolAnd):
+    params = (('indicator_a',CustomScalarToBoolWrapper),('indicator_b',CustomScalarToBoolWrapper),)
+
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
     #ee.addstrategy(enular.strategies.CustomScalar, indicator_a = enular.indicators.CustomMAFast, indicator_b = CustomMASlowWrapper)
-    ee.addstrategy(enular.strategies.CustomBoolAnd, indicator_a = enular.indicators.CustomCrossOver, indicator_b = enular.indicators.CustomCrossOver)
+    ee.addstrategy(enular.strategies.CustomBoolAnd, indicator_a = CustomBoolToBoolAndWrapper, indicator_b = CustomBoolToBoolAndWrapper)
+    #ee.addstrategy(enular.strategies.CustomBoolAnd, indicator_a = CustomScalarToBoolWrapper, indicator_b = CustomScalarToBoolWrapper)
     #ee.addstrategy(enular.strategies.MAcrossover)
 
     start_portfolio_value = ee.broker.getvalue()

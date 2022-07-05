@@ -16,23 +16,41 @@ class Dummy(enular.Indicator):
     pass
 
 class CustomBoolToBoolAnd(enular.Indicator):
-    pass
-
-class CustomScalarToBool(enular.Indicator):
     
-    _mindatas = 2
+    params = (
+        ('indicator_a',Dummy),
+        ('indicator_b',Dummy),
+    )
 
-    lines = ('crossover',)
-
-    plotinfo = dict(plotymargin=0.05, plotyhlines=[-1.0, 1.0])
+    lines = ('cbtba',)
 
     def __init__(self):
-        upcross = bt.indicator.CrossUp(self.data, self.data1)
-        downcross = bt.indicator.CrossDown(self.data, self.data1)
 
-        self.lines.crossover = upcross - downcross
+        self.data0 = self.params.indicator_a(self.data)
+        self.data1 = self.params.indicator_b(self.data)
 
-    pass
+        and_operation = (self.data0 + self.data1)/2
+
+        self.lines.cbtba = and_operation
+        
+class CustomScalarToBool(enular.Indicator):
+    
+    params = (
+        ('indicator_a',Dummy),
+        ('indicator_b',Dummy),
+    )
+
+    lines = ('cstb',)
+
+    def __init__(self):
+
+        self.data0 = self.params.indicator_a(self.data)
+        self.data1 = self.params.indicator_b(self.data)
+
+        upcross = bt.indicators.CrossUp(self.data0, self.data1)
+        downcross = bt.indicators.CrossDown(self.data0, self.data1)
+
+        self.lines.cstb = upcross - downcross
 
 class CustomMAFast(bt.indicators.MovingAverageSimple):    
     params = (('period',20),)
@@ -43,6 +61,8 @@ class CustomMASlow(bt.indicators.MovingAverageSimple):
 class CustomCrossOver(bt.indicators.CrossOver):
 
     params = (('pfast',20),('pslow',50),)
+
+    lines = ('crossover',)
 
     def __init__(self):
 
