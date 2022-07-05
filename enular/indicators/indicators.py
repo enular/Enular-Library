@@ -12,6 +12,8 @@ from backtrader.indicators import Average
 
 import enular
 
+#Main
+
 class Dummy(enular.Indicator):    
     pass
 
@@ -51,6 +53,26 @@ class CustomScalarToBool(enular.Indicator):
         downcross = bt.indicators.CrossDown(self.data0, self.data1)
 
         self.lines.cstb = upcross - downcross
+
+class CustomScalarToScalar(enular.Indicator):
+    
+    params = (
+        ('indicator_a',Dummy),
+        ('indicator_b',Dummy),
+    )
+
+    lines = ('csts',)
+
+    def __init__(self):
+
+        self.data0 = self.params.indicator_a(self.data)
+        self.data1 = self.params.indicator_b(self.data)
+
+        upcross = self.data0 + self.data1
+
+        self.lines.csts = upcross - downcross
+
+#Tests
 
 class CustomMAFast(bt.indicators.MovingAverageSimple):    
     params = (('period',20),)
