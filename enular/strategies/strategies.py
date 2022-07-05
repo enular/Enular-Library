@@ -124,7 +124,7 @@ class CustomStrategyTest(enular.Strategy):
 
 class MAcrossover(enular.Strategy): 
     # Moving average parameters
-    params = (('pfast',20),('pslow',52),)
+    params = (('pfast',20),('pslow',50),)
 
     def __init__(self, *args):
         self.dataclose = self.datas[0].close

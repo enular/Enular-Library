@@ -15,18 +15,23 @@ import enular
 ee = enular.Cerebro(optreturn = False)
 
 #data = bt.feeds.PandasData(dataname=yf.download('TSLA','2017-01-01','2019-01-01'))
-data = enular.YahooData(dataname='TSLA', fromdate=datetime(2017, 1, 1), todate=datetime(2022, 1, 1))
-ee.adddata(data)
+data1 = enular.YahooData(dataname='TSLA', fromdate=datetime(2017, 1, 1), todate=datetime(2022, 1, 1))
+#data2 = enular.YahooData(dataname='AMZN', fromdate=datetime(2017, 1, 1), todate=datetime(2022, 1, 1))
+
+ee.adddata(data1)
+#ee.adddata(data2)
 
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
 class CustomMASlowWrapper(enular.indicators.CustomMASlow):
-    params = (('period',30),)
+    params = (('period',50),)
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
-    ee.addstrategy(enular.strategies.CustomScalar, indicator_a = bt.indicators.CustomMAFast, indicator_b = enular.indicators.CustomMASlow)
-    
+    #ee.addstrategy(enular.strategies.CustomScalar, indicator_a = enular.indicators.CustomMAFast, indicator_b = CustomMASlowWrapper)
+    ee.addstrategy(enular.strategies.CustomBoolAnd, indicator_a = enular.indicators.CustomCrossOver, indicator_b = enular.indicators.CustomCrossOver)
+    #ee.addstrategy(enular.strategies.MAcrossover)
+
     start_portfolio_value = ee.broker.getvalue()
 
     results = ee.run()
