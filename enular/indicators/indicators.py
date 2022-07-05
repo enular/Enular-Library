@@ -15,6 +15,12 @@ import enular
 class Dummy(enular.Indicator):    
     pass
 
+class CustomBoolToBoolAnd(enular.Indicator):
+    pass
+
+class CustomScalarToBool(enular.Indicator):
+    pass
+
 class CustomMAFast(bt.indicators.MovingAverageSimple):    
     params = (('period',20),)
 

@@ -20,9 +20,12 @@ ee.adddata(data)
 
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
+class CustomMASlowWrapper(enular.indicators.CustomMASlow):
+    params = (('period',30),)
+
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
-    ee.addstrategy(enular.strategies.CustomStrategy, indicator_a = bt.indicators.MovingAverageSimple, indicator_b = enular.indicators.CustomMASlow)
+    ee.addstrategy(enular.strategies.CustomScalar, indicator_a = bt.indicators.CustomMAFast, indicator_b = enular.indicators.CustomMASlow)
     
     start_portfolio_value = ee.broker.getvalue()
 

@@ -15,13 +15,83 @@ import enular
 # INDICATORS NEED TO BE BOOLEAN, NOT SCALED TO ANYTHING
 # Pass through dictionary as argument.
 
+#Boolean
+class CustomBoolAnd(enular.Strategy):
+
+    params = (
+        ('indicator_a',enular.indicators.Dummy),
+        ('indicator_b',enular.indicators.Dummy),
+    )
+
+    def __init__(self):
+
+        self.dataclose = self.datas[0].close
+        self.order = None
+
+        self.indicator_a = self.params.indicator_a(self.datas[0])
+        self.indicator_b = self.params.indicator_b(self.datas[0])
+
+    def next(self):
+
+        if self.order:
+            return
+
+        if not self.position:
+                
+            if self.indicator_a > 0 and self.indicator_b > 0:
+                self.log(f'BUY CREATE {self.dataclose[0]:2f}')
+                self.order = self.buy()
+             
+            elif self.indicator_a < 0 and self.indicator_b < 0:
+                self.log(f'SELL CREATE {self.dataclose[0]:2f}')
+                self.order = self.sell()
+        
+        else:
+
+            if len(self) >= (self.bar_executed + 5):
+                self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
+                self.order = self.close()
+
+class CustomScalar(enular.Strategy):
+    
+    params = (
+        ('indicator_a',enular.indicators.Dummy),
+        ('indicator_b',enular.indicators.Dummy),
+    )
+
+    def __init__(self):
+
+        self.dataclose = self.datas[0].close
+        self.order = None
+
+        self.indicator_a = self.params.indicator_a(self.datas[0])
+        self.indicator_b = self.params.indicator_b(self.datas[0])
+
+    def next(self):
+
+        if self.order:
+            return
+
+        if not self.position:
+
+            if self.indicator_a[0] > self.indicator_b[0] and self.indicator_a[-1] < self.indicator_b[-1]:
+                self.log(f'BUY CREATE {self.dataclose[0]:2f}')
+                self.order = self.buy()
+
+            elif self.indicator_a[0] < self.indicator_b[0] and self.indicator_a[-1] > self.indicator_b[-1]:
+                self.log(f'SELL CREATE {self.dataclose[0]:2f}')
+                self.order = self.sell()
+
+        else:
+            if len(self) >= (self.bar_executed + 5):
+                self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
+                self.order = self.close()
+
 class CustomStrategyTest(enular.Strategy):
     
     params = (
         ('indicator_a',enular.indicators.Dummy),
         ('indicator_b',enular.indicators.Dummy),
-        ('a_param', 999),
-        ('a_param', 999),
     )
 
     def __init__(self):
@@ -46,8 +116,8 @@ class CustomStrategyTest(enular.Strategy):
             elif self.indicator_a[0] < self.indicator_b[0] and self.indicator_a[-1] > self.indicator_b[-1]:
                 self.log(f'SELL CREATE {self.dataclose[0]:2f}')
                 self.order = self.sell()
+        
         else:
-            
             if len(self) >= (self.bar_executed + 5):
                 self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
                 self.order = self.close()
@@ -99,6 +169,7 @@ class MAcrossover(enular.Strategy):
                 self.log(f'SELL CREATE {self.dataclose[0]:2f}')
                 # Keep track of the created order to avoid a 2nd order
                 self.order = self.sell()
+        
         else:
             # We are already in the market, look for a signal to CLOSE trades
             if len(self) >= (self.bar_executed + 5):
