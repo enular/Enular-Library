@@ -19,6 +19,19 @@ class CustomBoolToBoolAnd(enular.Indicator):
     pass
 
 class CustomScalarToBool(enular.Indicator):
+    
+    _mindatas = 2
+
+    lines = ('crossover',)
+
+    plotinfo = dict(plotymargin=0.05, plotyhlines=[-1.0, 1.0])
+
+    def __init__(self):
+        upcross = bt.indicator.CrossUp(self.data, self.data1)
+        downcross = bt.indicator.CrossDown(self.data, self.data1)
+
+        self.lines.crossover = upcross - downcross
+
     pass
 
 class CustomMAFast(bt.indicators.MovingAverageSimple):    
