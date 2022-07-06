@@ -23,19 +23,19 @@ ee.adddata(data1)
 
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
-class CustomMASlowWrapper(enular.indicators.CustomMASlow):
+class CMASWrapper(enular.indicators.CustomMASlow):
     params = (('period',50),)
 
-class CustomScalarToBoolWrapper(enular.indicators.CustomScalarToBool):
-    params = (('indicator_a',enular.indicators.CustomMAFast),('indicator_b',CustomMASlowWrapper),)
+class STBWrapper(enular.indicators.ScalToBool):
+    params = (('indicator_a',enular.indicators.CustomMAFast),('indicator_b',CMASWrapper),)
 
-class CustomBoolToBoolAndWrapper(enular.indicators.CustomBoolToBoolAnd):
-    params = (('indicator_a',CustomScalarToBoolWrapper),('indicator_b',CustomScalarToBoolWrapper),)
+class BTBWrapper(enular.indicators.BoolToBool):
+    params = (('indicator_a',STBWrapper),('indicator_b',STBWrapper),)
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
     #ee.addstrategy(enular.strategies.CustomScalar, indicator_a = enular.indicators.CustomMAFast, indicator_b = CustomMASlowWrapper)
-    ee.addstrategy(enular.strategies.CustomBoolAnd, indicator_a = CustomBoolToBoolAndWrapper, indicator_b = CustomBoolToBoolAndWrapper)
+    ee.addstrategy(enular.strategies.BoolToOrderAnd, indicator_a = BTBWrapper, indicator_b = BTBWrapper)
     #ee.addstrategy(enular.strategies.CustomBoolAnd, indicator_a = CustomScalarToBoolWrapper, indicator_b = CustomScalarToBoolWrapper)
     #ee.addstrategy(enular.strategies.MAcrossover)
 

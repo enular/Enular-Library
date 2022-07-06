@@ -12,35 +12,22 @@ from backtrader.indicators import Average
 
 import enular
 
-#Main
+#CORE
 
-class Dummy(enular.Indicator):    
-    pass
+class ScalToScal(enular.Indicator):
 
-class CustomBoolToBoolAnd(enular.Indicator):
-    
-    params = (
-        ('indicator_a',Dummy),
-        ('indicator_b',Dummy),
-    )
-
-    lines = ('cbtba',)
+    lines = ('csts',)
 
     def __init__(self):
 
         self.data0 = self.params.indicator_a(self.data)
         self.data1 = self.params.indicator_b(self.data)
 
-        and_operation = (self.data0 + self.data1)/2
+        operation = self.data0 + self.data1
 
-        self.lines.cbtba = and_operation
-        
-class CustomScalarToBool(enular.Indicator):
-    
-    params = (
-        ('indicator_a',Dummy),
-        ('indicator_b',Dummy),
-    )
+        self.lines.csts = operation
+
+class ScalToBool(enular.Indicator):
 
     lines = ('cstb',)
 
@@ -51,28 +38,24 @@ class CustomScalarToBool(enular.Indicator):
 
         upcross = bt.indicators.CrossUp(self.data0, self.data1)
         downcross = bt.indicators.CrossDown(self.data0, self.data1)
+        operation = upcross - downcross
 
-        self.lines.cstb = upcross - downcross
+        self.lines.cstb = operation
 
-class CustomScalarToScalar(enular.Indicator):
-    
-    params = (
-        ('indicator_a',Dummy),
-        ('indicator_b',Dummy),
-    )
+class BoolToBool(enular.Indicator):
 
-    lines = ('csts',)
+    lines = ('cbtba',)
 
     def __init__(self):
 
         self.data0 = self.params.indicator_a(self.data)
         self.data1 = self.params.indicator_b(self.data)
 
-        upcross = self.data0 + self.data1
+        operation = (self.data0 + self.data1)/2
 
-        self.lines.csts = upcross - downcross
+        self.lines.cbtba = operation
 
-#Tests
+#TEST
 
 class CustomMAFast(bt.indicators.MovingAverageSimple):    
     params = (('period',20),)

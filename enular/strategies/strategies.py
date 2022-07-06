@@ -12,87 +12,47 @@ import sklearn
 
 import enular
 
-#Main
+#CORE
 
-class CustomBoolAnd(enular.Strategy):
+class ScalToOrder(enular.Strategy):
 
-    params = (
-        ('indicator_a',enular.indicators.Dummy),
-        ('indicator_b',enular.indicators.Dummy),
-    )
+    def trade_logic(self):
+                  
+        if self.indicator_a[0] > self.indicator_b[0] and self.indicator_a[-1] < self.indicator_b[-1]:
+            self.log(f'BUY CREATE {self.dataclose[0]:2f}')
+            self.order = self.buy()
 
-    def __init__(self):
+        elif self.indicator_a[0] < self.indicator_b[0] and self.indicator_a[-1] > self.indicator_b[-1]:
+            self.log(f'SELL CREATE {self.dataclose[0]:2f}')
+            self.order = self.sell()
 
-        self.dataclose = self.datas[0].close
-        self.order = None
+class BoolToOrderAnd(enular.Strategy):
 
-        self.indicator_a = self.params.indicator_a(self.datas[0])
-        self.indicator_b = self.params.indicator_b(self.datas[0])
+    def trade_logic(self):
+                  
+        if self.indicator_a > 0 and self.indicator_b > 0:
+            self.log(f'BUY CREATE {self.dataclose[0]:2f}')
+            self.order = self.buy()
+            
+        elif self.indicator_a < 0 and self.indicator_b < 0:
+            self.log(f'SELL CREATE {self.dataclose[0]:2f}')
+            self.order = self.sell()
 
-    def next(self):
+class BoolToOrderOr(enular.Strategy):
 
-        if self.order:
-            return
+    def trade_logic(self):
+                  
+        if self.indicator_a > 0 or self.indicator_b > 0:
+            self.log(f'BUY CREATE {self.dataclose[0]:2f}')
+            self.order = self.buy()
+            
+        elif self.indicator_a < 0 or self.indicator_b < 0:
+            self.log(f'SELL CREATE {self.dataclose[0]:2f}')
+            self.order = self.sell()
 
-        if not self.position:
-                
-            if self.indicator_a > 0 and self.indicator_b > 0:
-                self.log(f'BUY CREATE {self.dataclose[0]:2f}')
-                self.order = self.buy()
-             
-            elif self.indicator_a < 0 and self.indicator_b < 0:
-                self.log(f'SELL CREATE {self.dataclose[0]:2f}')
-                self.order = self.sell()
-        
-        else:
-
-            if len(self) >= (self.bar_executed + 5):
-                self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
-                self.order = self.close()
-
-class CustomScalar(enular.Strategy):
-    
-    params = (
-        ('indicator_a',enular.indicators.Dummy),
-        ('indicator_b',enular.indicators.Dummy),
-    )
-
-    def __init__(self):
-
-        self.dataclose = self.datas[0].close
-        self.order = None
-
-        self.indicator_a = self.params.indicator_a(self.datas[0])
-        self.indicator_b = self.params.indicator_b(self.datas[0])
-
-    def next(self):
-
-        if self.order:
-            return
-
-        if not self.position:
-
-            if self.indicator_a[0] > self.indicator_b[0] and self.indicator_a[-1] < self.indicator_b[-1]:
-                self.log(f'BUY CREATE {self.dataclose[0]:2f}')
-                self.order = self.buy()
-
-            elif self.indicator_a[0] < self.indicator_b[0] and self.indicator_a[-1] > self.indicator_b[-1]:
-                self.log(f'SELL CREATE {self.dataclose[0]:2f}')
-                self.order = self.sell()
-
-        else:
-            if len(self) >= (self.bar_executed + 5):
-                self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
-                self.order = self.close()
-
-#Tests
+#TEST
 
 class CustomStrategyTest(enular.Strategy):
-    
-    params = (
-        ('indicator_a',enular.indicators.Dummy),
-        ('indicator_b',enular.indicators.Dummy),
-    )
 
     def __init__(self):
 

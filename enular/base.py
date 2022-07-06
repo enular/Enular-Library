@@ -26,6 +26,8 @@ from backtrader.utils import date2num
 if __name__ == '__main__':
     print ('Do not run this file.')
 
+#CORE
+
 class Cerebro(bt.Cerebro):  
     
     def quantstats(self, results):
@@ -36,41 +38,60 @@ class Cerebro(bt.Cerebro):
             quantstats.reports.html(returns, output='stats.html', title='BTC Sentiment', download_filename='stats.html')
             webbrowser.open('file://' + os.path.realpath('stats.html'))
 
+class Dummy(bt.Indicator):    
+    
+    pass
+
+class Indicator(bt.Indicator):
+    
+    params = (
+        ('indicator_a',Dummy),
+        ('indicator_b',Dummy),
+    )
+
 class Strategy(bt.Strategy):
     
+    params = (
+        ('indicator_a',Dummy),
+        ('indicator_b',Dummy),
+    )
+
+    def __init__(self):
+
+        self.dataclose = self.datas[0].close
+        self.order = None
+
+        self.indicator_a = self.params.indicator_a(self.datas[0])
+        self.indicator_b = self.params.indicator_b(self.datas[0])
+
+    def trade_logic(self):
+        pass
+
+    def close_logic(self):
+        if len(self) >= (self.bar_executed + 5):
+            self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
+            self.order = self.close()
+
+    def next(self):
+
+        if self.order:
+            return
+
+        if not self.position:
+            self.trade_logic()
+
+        else:
+            self.close_logic()
+
     def log(self, txt, dt=None):
         dt = dt or self.datas[0].datetime.date(0)
         print(f'{dt.isoformat()} {txt}') # Comment this line when running optimization
-    
-    '''
-    def notify_order(self, order):
-        if order.status in [order.Submitted, order.Accepted]:
-            # An active Buy/Sell order has been submitted/accepted - Nothing to do
-            return
-
-        # Check if an order has been completed
-        # Attention: broker could reject order if not enough cash
-        if order.status in [order.Completed]:
-            if order.isbuy():
-                self.log(f'BUY EXECUTED, {order.executed.price:.2f}')
-            elif order.issell():
-                self.log(f'SELL EXECUTED, {order.executed.price:.2f}')
-            self.bar_executed = len(self)
-
-        elif order.status in [order.Canceled, order.Margin, order.Rejected]:
-            self.log('Order Canceled/Margin/Rejected')
-
-        # Reset orders
-        self.order = None
-    '''
 
     def notify_order(self, order):
         if order.status in [order.Submitted, order.Accepted]:
             # Buy/Sell order submitted/accepted to/by broker - Nothing to do
             return
 
-        # Check if an order has been completed
-        # Attention: broker could reject order if not enough cash
         if order.status in [order.Completed]:
             if order.isbuy():
                 self.log(
@@ -92,7 +113,6 @@ class Strategy(bt.Strategy):
         elif order.status in [order.Canceled, order.Margin, order.Rejected]:
             self.log('Order Canceled/Margin/Rejected')
 
-        # Write down: no pending order
         self.order = None
 
     def notify_trade(self, trade):
@@ -102,21 +122,8 @@ class Strategy(bt.Strategy):
         self.log('OPERATION PROFIT, GROSS %.2f, NET %.2f' %
                 (trade.pnl, trade.pnlcomm))
 
-    pass
+#SECONDARY
 
-class Indicator(bt.Indicator):
-    params = (('something',10),)
-
-class Order(bt.order.Order):
-    pass
-
-class Broker(bt.brokers.BackBroker):
-    pass
-
-class Analyzer(bt.Analyzer):
-    pass
-
-#Overrides Yahoo data streamer with updated version from Backtrader 2
 class YahooData(bt.feeds.YahooFinanceData):
 
     def start_v7(self):
@@ -228,7 +235,17 @@ class YahooData(bt.feeds.YahooFinanceData):
 
         self.f = f
 
-#Make sure that file and dependencies are imported and functioning
+class Order(bt.order.Order):
+    pass
+
+class Broker(bt.brokers.BackBroker):
+    pass
+
+class Analyzer(bt.Analyzer):
+    pass
+
+#TEST
+
 class Test:
     
     a = 1
