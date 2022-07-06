@@ -2,25 +2,39 @@
  
 pip install enular
 
-NOTE: Pre-release and development in progress. Expect launch end of 2022.
+NOTE: Alpha version and development in progress. Expect beta release in late 2022.
 
-The Enular Library contains code for backtesting, evaluating and visualising algorithmic trading strategies. It also provides indicators, data sources, and paper trading capabilities. Documentation coming soon. Enular.com
+The Enular Library contains tools for backtesting, evaluating and visualising algorithmic trading strategies. It allows the user to easily combine indicators with complex operations into strategies, similar to neural networks. It also provides indicators, data sources, and paper trading capabilities. Documentation coming soon. Enular.com
 
 Details:
-- Extends Backtrader
-- Includes fixes from BackTrader 2
-- Data sourced from Yahoo Finance
-- Live trading via IB
-- Accessibility improvements
+- Uses Backtrader's Cerebro engine with fixes from Backtrader2
+- Data streaming from Yahoo Finance
+- Indicator and strategy collection
+- Improve accessiblity with simplified architecture
+- Highly scalable strategies: extend classes and redefine trade logic
+- Live trading capabilities
 
-In progress:
+Architecture:
+
+- 1 category of base indicators (INPUT: market data, OUTPUT: single indicator signal)
+    - Indicator library with existing technical analysis indicators
+
+- 3 categories of indicator operations (INPUT: two indicator signals, OUTPUT: single indicator signal):
+    - Scalar inputs to scalar output
+    - Scalar inputs to boolean output
+    - Boolean inputs to boolean output (7 basic logic gates)
+
+- 2 categories of strategy operations (INPUT two indicator signals, OUTPUT: order instructions):
+    - Scalar inputs to order instructions
+    - Boolean inputs to order instructions (7 basic logic gates)
+
+Development in progress:
+- Live trading via IB
 - Indicator library
-- Strategies library
-- Bug fixes
-- Articles to show how Enular fits in with Backtrader, aims, vision
-- Strategy template and how to use indicators, requirements, data, assets A to Z, references to backtrader
-- Documentation
-- Machine learning capabities
-- Articles about ML capabilities
-- Forum
+- Strategy library
 - Data feed improvements
+- Machine learning capabities
+- Instructional articles on Medium
+- Templates
+- Documentation
+- User forum
