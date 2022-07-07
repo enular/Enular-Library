@@ -48,6 +48,8 @@ class Indicator(bt.Indicator):
         ('indicator_b',Dummy),
     )
 
+    plotinfo = dict(subplot=False)
+
     def trade_logic(self):
         pass
 

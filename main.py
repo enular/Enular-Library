@@ -22,11 +22,11 @@ ee.adddata(data1)
 
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
-class CMASWrapper(enular.indicators.MovingAverageSlow):
+class ADOWrapper(enular.indicators.AccelerationDecelerationOscillator):
     params = (('period',50),)
 
 class STBWrapper(enular.indicators.ScalToBool):
-    params = (('indicator_a',enular.indicators.MovingAverageFast),('indicator_b',CMASWrapper),)
+    params = (('indicator_a',enular.indicators.AwesomeOscillator),('indicator_b',ADOWrapper),)
 
 class BTBWrapper(enular.indicators.BoolToBool):
     params = (('indicator_a',STBWrapper),('indicator_b',STBWrapper),)

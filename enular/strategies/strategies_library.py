@@ -12,46 +12,6 @@ import sklearn
 
 import enular
 
-#CORE
-
-class ScalToOrder(enular.Strategy):
-
-    def trade_logic(self):
-                  
-        if self.indicator_a[0] > self.indicator_b[0] and self.indicator_a[-1] < self.indicator_b[-1]:
-            self.log(f'BUY CREATE {self.dataclose[0]:2f}')
-            self.order = self.buy()
-
-        elif self.indicator_a[0] < self.indicator_b[0] and self.indicator_a[-1] > self.indicator_b[-1]:
-            self.log(f'SELL CREATE {self.dataclose[0]:2f}')
-            self.order = self.sell()
-
-class BoolToOrderAnd(enular.Strategy):
-
-    def trade_logic(self):
-                  
-        if self.indicator_a > 0 and self.indicator_b > 0:
-            self.log(f'BUY CREATE {self.dataclose[0]:2f}')
-            self.order = self.buy()
-            
-        elif self.indicator_a < 0 and self.indicator_b < 0:
-            self.log(f'SELL CREATE {self.dataclose[0]:2f}')
-            self.order = self.sell()
-
-class BoolToOrderOr(enular.Strategy):
-
-    def trade_logic(self):
-                  
-        if self.indicator_a > 0 or self.indicator_b > 0:
-            self.log(f'BUY CREATE {self.dataclose[0]:2f}')
-            self.order = self.buy()
-            
-        elif self.indicator_a < 0 or self.indicator_b < 0:
-            self.log(f'SELL CREATE {self.dataclose[0]:2f}')
-            self.order = self.sell()
-
-#TEST
-
 class CustomStrategyTest(enular.Strategy):
 
     def __init__(self):
