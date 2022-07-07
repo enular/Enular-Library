@@ -19,25 +19,21 @@ data1 = enular.YahooData(dataname='TSLA', fromdate=datetime(2017, 1, 1), todate=
 #data2 = enular.YahooData(dataname='AMZN', fromdate=datetime(2017, 1, 1), todate=datetime(2022, 1, 1))
 
 ee.adddata(data1)
-#ee.adddata(data2)
 
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
-class CMASWrapper(enular.indicators.CustomMASlow):
+class CMASWrapper(enular.indicators.MovingAverageSlow):
     params = (('period',50),)
 
 class STBWrapper(enular.indicators.ScalToBool):
-    params = (('indicator_a',enular.indicators.CustomMAFast),('indicator_b',CMASWrapper),)
+    params = (('indicator_a',enular.indicators.MovingAverageFast),('indicator_b',CMASWrapper),)
 
 class BTBWrapper(enular.indicators.BoolToBool):
     params = (('indicator_a',STBWrapper),('indicator_b',STBWrapper),)
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
-    #ee.addstrategy(enular.strategies.CustomScalar, indicator_a = enular.indicators.CustomMAFast, indicator_b = CustomMASlowWrapper)
     ee.addstrategy(enular.strategies.BoolToOrderAnd, indicator_a = BTBWrapper, indicator_b = BTBWrapper)
-    #ee.addstrategy(enular.strategies.CustomBoolAnd, indicator_a = CustomScalarToBoolWrapper, indicator_b = CustomScalarToBoolWrapper)
-    #ee.addstrategy(enular.strategies.MAcrossover)
 
     start_portfolio_value = ee.broker.getvalue()
 
