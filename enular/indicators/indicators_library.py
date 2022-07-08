@@ -11,23 +11,35 @@ import backtrader as bt
 
 import enular
 
-#Scalar: AcdDecOsc = AwesomeOscillator - SMA(AwesomeOscillator, period)
+#Scalar
+#Formula:   AcdDecOsc = AwesomeOscillator - SMA(AwesomeOscillator, period)
+#Scale:     Change in difference in average price
 class AccelerationDecelerationOscillator(bt.indicators.AccelerationDecelerationOscillator):
     pass
 
-#Scalar: median price = (high + low) / 2, AO = SMA(median price, 5)- SMA(median price, 34)
+#Scalar
+#Formula:   median price = (high + low) / 2
+#           AO = SMA(median price, 5)- SMA(median price, 34)
+#Scale:     Difference in average price
 class AwesomeOscillator(bt.indicators.AwesomeOscillator):
     pass
 
-#Scalar: aroonosc = aroonup - aroondown, up = 100 * (period - distance to highest high) / period, down = 100 * (period - distance to lowest low) / period
+#Scalar
+#Forumala:  aroonosc = aroonup - aroondown
+#           up = 100 * (period - distance to highest high) / period
+#           down = 100 * (period - distance to lowest low) / period
+#Scale:     Period between peaks
 class AroonOscillator(bt.indicators.AroonOscillator):
     pass
 
-#Scalar:
+#Scalar
+#Formula:   TrueRange = max(high - low, abs(high - prev_close), abs(prev_close - low)
+#           ATR = SmoothedMovingAverage(TrueRange, period)
+#Scale:     Price range
 class AverageTrueRange(bt.indicators.AverageTrueRange):
     pass
 
-#Scalar:
+#Scalar
 class BollingerBands(bt.indicators.BollingerBands):
     pass
 
@@ -60,11 +72,231 @@ class DirectionalIndicator(bt.indicators.DirectionalIndicator):
     pass
 
 #Scalar:
-class DirectionalIndicator(bt.indicators.DirectionalIndicator):
+class PlusDirectionalIndicator(bt.indicators.PlusDirectionalIndicator):
     pass
 
 #Scalar:
-class DirectionalIndicator(bt.indicators.DirectionalIndicator):
+class MinusDirectionalIndicator(bt.indicators.MinusDirectionalIndicator):
+    pass
+
+#Scalar:
+class AverageDirectionalMovementIndex(bt.indicators.AverageDirectionalMovementIndex):
+    pass
+
+#Scalar:
+class AverageDirectionalMovementIndexRating(bt.indicators.AverageDirectionalMovementIndexRating):
+    pass
+
+#Scalar:
+class DirectionalMovementIndex(bt.indicators.DirectionalMovementIndex):
+    pass
+
+#Scalar:
+class DirectionalMovement(bt.indicators.DirectionalMovement):
+    pass
+
+#Scalar:
+class DicksonMovingAverage(bt.indicators.DicksonMovingAverage):
+    pass
+
+#Scalar:
+class DetrendedPriceOscillator(bt.indicators.DetrendedPriceOscillator):
+    pass
+
+#Scalar:
+class DV2(bt.indicators.DV2):
+    pass
+
+#Scalar:
+class ExponentialMovingAverage(bt.indicators.ExponentialMovingAverage):
+    pass
+
+#Scalar:
+class Envelope(bt.indicators.Envelope):
+    pass
+
+#Scalar:
+class haDelta(bt.indicators.haDelta):
+    pass
+
+#Scalar:
+class HeikinAshi(bt.indicators.HeikinAshi):
+    pass
+
+#Scalar:
+class HullMovingAverage(bt.indicators.HullMovingAverage):
+    pass
+
+#Scalar:
+class HurstExponent(bt.indicators.HurstExponent):
+    pass
+
+#Scalar:
+class Ichimoku(bt.indicators.Ichimoku):
+    pass
+
+#Scalar:
+class AdaptiveMovingAverage(bt.indicators.AdaptiveMovingAverage):
+    pass
+
+#Scalar:
+class KnowSureThing(bt.indicators.KnowSureThing):
+    pass
+
+#Scalar:
+class LaguerreRSI(bt.indicators.LaguerreRSI):
+    pass
+
+#Scalar:
+class LaguerreFilter(bt.indicators.LaguerreFilter):
+    pass
+
+#Scalar:
+class MACD(bt.indicators.MACD):
+    pass
+
+#Scalar:
+class MACDHisto(bt.indicators.MACDHisto):
+    pass
+
+#Scalar:
+class Momentum(bt.indicators.Momentum):
+    pass
+
+#Scalar:
+class MomentumOscillator(bt.indicators.MomentumOscillator):
+    pass
+
+#Scalar:
+class RateOfChange(bt.indicators.RateOfChange):
+    pass
+
+#Scalar:
+class RateOfChange100(bt.indicators.RateOfChange100):
+    pass
+
+#Scalar:
+class OLS_Slope_InterceptN(bt.indicators.OLS_Slope_InterceptN):
+    pass
+
+#Scalar:
+class OLS_TransformationN(bt.indicators.OLS_TransformationN):
+    pass
+
+#Scalar:
+class OLS_BetaN(bt.indicators.OLS_BetaN):
+    pass
+
+#Scalar:
+class CointN(bt.indicators.CointN):
+    pass
+
+#Scalar:
+class OscillatorMixIn(bt.indicators.OscillatorMixIn):
+    pass
+
+#Scalar:
+class Oscillator(bt.indicators.Oscillator):
+    pass
+
+#Scalar:
+class PercentChange(bt.indicators.PercentChange):
+    pass
+
+#Scalar:
+class PercentRank(bt.indicators.PercentRank):
+    pass
+
+#Scalar:
+class PivotPoint(bt.indicators.PivotPoint):
+    pass
+
+#Scalar:
+class FibonacciPivotPoint(bt.indicators.FibonacciPivotPoint):
+    pass
+
+#Scalar:
+class DemarkPivotPoint(bt.indicators.DemarkPivotPoint):
+    pass
+
+#Scalar:
+class PrettyGoodOscillator(bt.indicators.PrettyGoodOscillator):
+    pass
+
+#Scalar:
+class PriceOscillator(bt.indicators.PriceOscillator):
+    pass
+
+#Scalar:
+class PercentagePriceOscillator(bt.indicators.PercentagePriceOscillator):
+    pass
+
+#Scalar:
+class ParabolicSAR(bt.indicators.ParabolicSAR):
+    pass
+
+#Scalar:
+class RelativeMomentumIndex(bt.indicators.RelativeMomentumIndex):
+    pass
+
+#Scalar:
+class RelativeStrengthIndex(bt.indicators.RelativeStrengthIndex):
+    pass
+
+#Scalar:
+class SmoothedMovingAverage(bt.indicators.SmoothedMovingAverage):
+    pass
+
+#Scalar:
+class StochasticFast(bt.indicators.StochasticFast):
+    pass
+
+#Scalar:
+class Stochastic(bt.indicators.Stochastic):
+    pass
+
+#Scalar:
+class StochasticFull(bt.indicators.StochasticFull):
+    pass
+
+#Scalar:
+class Trix(bt.indicators.Trix):
+    pass
+
+#Scalar:
+class TrixSignal(bt.indicators.TrixSignal):
+    pass
+
+#Scalar:
+class TrueStrengthIndicator(bt.indicators.TrueStrengthIndicator):
+    pass
+
+#Scalar:
+class UltimateOscillator(bt.indicators.UltimateOscillator):
+    pass
+
+#Scalar:
+class Vortex(bt.indicators.Vortex):
+    pass
+
+#Scalar:
+class WilliamsR(bt.indicators.WilliamsR):
+    pass
+
+#Scalar:
+class WilliamsAD(bt.indicators.WilliamsAD):
+    pass
+
+#Scalar:
+class WeightedMovingAverage(bt.indicators.WeightedMovingAverage):
+    pass
+
+#Scalar:
+class ZeroLagExponentialMovingAverage(bt.indicators.ZeroLagExponentialMovingAverage):
+    pass
+
+#Scalar:
+class ZeroLagIndicator(bt.indicators.ZeroLagIndicator):
     pass
 
 #Scalar
