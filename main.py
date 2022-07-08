@@ -22,18 +22,22 @@ ee.adddata(data1)
 
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
-class ADOWrapper(enular.indicators.AccelerationDecelerationOscillator):
+class FirstWrapper(enular.indicators.MovingAverageSlow):
     params = (('period',50),)
 
+class SecondWrapper(enular.indicators.BollingerBands):
+    params = (('period',20),)
+
+
 class STBWrapper(enular.indicators.ScalToBool):
-    params = (('indicator_a',enular.indicators.AwesomeOscillator),('indicator_b',ADOWrapper),)
+    params = (('indicator_a',SecondWrapper),('indicator_b',FirstWrapper),)
 
 class BTBWrapper(enular.indicators.BoolToBool):
     params = (('indicator_a',STBWrapper),('indicator_b',STBWrapper),)
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
-    ee.addstrategy(enular.strategies.BoolToOrderAnd, indicator_a = BTBWrapper, indicator_b = BTBWrapper)
+    ee.addstrategy(enular.strategies.ScalToOrder, indicator_a = SecondWrapper, indicator_b = FirstWrapper)
 
     start_portfolio_value = ee.broker.getvalue()
 

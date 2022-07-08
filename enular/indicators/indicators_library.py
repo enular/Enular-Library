@@ -40,6 +40,8 @@ class AverageTrueRange(bt.indicators.AverageTrueRange):
     pass
 
 #Scalar
+#Scale:     Average price plus or minus standard deviations
+#Note:      As 3 lines, mid, top, and bot
 class BollingerBands(bt.indicators.BollingerBands):
     pass
 
@@ -271,7 +273,8 @@ class TrixSignal(bt.indicators.TrixSignal):
 class TrueStrengthIndicator(bt.indicators.TrueStrengthIndicator):
     pass
 
-#Scalar:
+#Scalar
+#Scale:     Percentage (or Ratio if not x100)
 class UltimateOscillator(bt.indicators.UltimateOscillator):
     pass
 
