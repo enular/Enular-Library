@@ -45,43 +45,46 @@ class AverageTrueRange(bt.indicators.AverageTrueRange):
 class BollingerBands(bt.indicators.BollingerBands):
     pass
 
-#Scalar:
+#Scalar
+#Scale:     Percentage
 class BollingerBandsPct(bt.indicators.BollingerBandsPct):
     pass
 
-#Scalar:
+#Scalar    
+#Scale:     Ratio
 class CommodityChannelIndex(bt.indicators.CommodityChannelIndex):
     pass
 
-#Scalar:
+#Scalar
+#Scale:     Price
 class DoubleExponentialMovingAverage(bt.indicators.DoubleExponentialMovingAverage):
     pass
 
-#Scalar:
+#Scalar:    Price
 class TripleExponentialMovingAverage(bt.indicators.TripleExponentialMovingAverage):
     pass
 
-#Scalar:
+#Scale:     Standard deviation
 class StandardDeviation(bt.indicators.StandardDeviation):
     pass
 
-#Scalar:
+#Scalar:    Deviation
 class MeanDeviation(bt.indicators.MeanDeviation):
     pass
 
-#Scalar:
+#Scalar:    Price movement
 class DirectionalIndicator(bt.indicators.DirectionalIndicator):
     pass
 
-#Scalar:
+#Scalar:    Price movement up
 class PlusDirectionalIndicator(bt.indicators.PlusDirectionalIndicator):
     pass
 
-#Scalar:
+#Scalar:    Price movement down
 class MinusDirectionalIndicator(bt.indicators.MinusDirectionalIndicator):
     pass
 
-#Scalar:
+#Scalar:    Price movement average
 class AverageDirectionalMovementIndex(bt.indicators.AverageDirectionalMovementIndex):
     pass
 
@@ -113,7 +116,7 @@ class DV2(bt.indicators.DV2):
 class ExponentialMovingAverage(bt.indicators.ExponentialMovingAverage):
     pass
 
-#Scalar:
+#Scalar
 class Envelope(bt.indicators.Envelope):
     pass
 
