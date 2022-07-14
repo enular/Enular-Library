@@ -1,6 +1,6 @@
 *.html
 setup.py
-test.py
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
