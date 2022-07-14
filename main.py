@@ -34,23 +34,29 @@ class STBWrapper(enular.indicators.ScalToBool):
 class BTBWrapper(enular.indicators.BoolToBool):
     params = (('indicator_a',STBWrapper),('indicator_b',STBWrapper),)
 
+class TempStrat(enular.Strategy):
+    def __init__(self):
+        enular.indicators.MACDHisto(self.data, m1_period=12, m2_period=30, signal_period=10)
+
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
-    ee.addstrategy(enular.strategies.ScalToOrder, indicator_a = enular.indicators.MACD, indicator_b = enular.indicators.MACD)
+    ee.addstrategy(enular.strategies.BoolToOrderAnd, indicator_a = enular.indicators.MACDHisto, indicator_b = enular.indicators.MACDHisto)
 
     start_portfolio_value = ee.broker.getvalue()
 
     results = ee.run()
+    ee.plot()
 
     end_portfolio_value = ee.broker.getvalue()
     pnl = end_portfolio_value - start_portfolio_value
     print(f'Starting Portfolio Value: {start_portfolio_value:2f}')
     print(f'Final Portfolio Value: {end_portfolio_value:2f}')
     print(f'PnL: {pnl:.2f}')
+    ee.plot()
 
 if __name__ == '__main__' and sys.argv[1] == 'run':
 
-    ee.addstrategy(enular.strategies.MAcrossover)
+    ee.addstrategy(TempStrat)
 
     ee.addanalyzer(bt.analyzers.PyFolio, _name='PyFolio')
 

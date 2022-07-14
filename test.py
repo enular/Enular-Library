@@ -6,7 +6,7 @@ import yahoo_fin.stock_info as si
 #from .enular.indicators import MACDHisto
 import enular
 
-class St(bt.Strategy):
+class St(enular.Strategy):
 
     def __init__(self):
         # SMA(self.data)

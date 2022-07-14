@@ -46,7 +46,6 @@ class Indicator(bt.Indicator):
     params = (
         ('indicator_a',Dummy),
         ('indicator_b',Dummy),
-
     )
 
     plotinfo = dict(subplot=False)
