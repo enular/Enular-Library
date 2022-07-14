@@ -26,8 +26,7 @@
 ############################################################################
 from __future__ import (absolute_import, division, print_function, unicode_literals)
 import backtrader as bt
-#from Moving_Averages import EMA
-import enular
+from enular.indicators.Moving_Averages_lib import *
 
 class MACD(bt.Indicator):
 
@@ -73,11 +72,11 @@ class MACD(bt.Indicator):
     plotlines = dict(macd=dict(color='crimson'), signal=dict(ls='--', color='navy'))
 
     def __init__(self):
-        m1 = enular.indicators.EMA(self.data, period=self.params.m1_period)
-        m2 = enular.indicators.EMA(self.data, period=self.params.m2_period)
+        m1 = EMA(self.data, period=self.params.m1_period)
+        m2 = EMA(self.data, period=self.params.m2_period)
 
         self.lines.macd = m1 - m2
-        self.lines.signal = enular.indicators.EMA(self.lines.macd, period=self.params.signal_period)
+        self.lines.signal = EMA(self.lines.macd, period=self.params.signal_period)
 
 class MACDHisto(MACD):
 

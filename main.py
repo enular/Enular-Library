@@ -36,6 +36,7 @@ class BTBWrapper(enular.indicators.BoolToBool):
 
 class TempStrat(enular.Strategy):
     def __init__(self):
+        self.order = None
         enular.indicators.MACDHisto(self.data, m1_period=12, m2_period=30, signal_period=10)
 
 if __name__ == '__main__' and sys.argv[1] == 'test':

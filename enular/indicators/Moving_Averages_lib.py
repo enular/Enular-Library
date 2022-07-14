@@ -98,7 +98,6 @@ class EMA(bt.Indicator):
     plotlines = dict(ema=dict(color='blue'))
 
     def __init__(self):
-        print('hello')
         # the following function is located within Backtrader's basicops.py module
         self.lines.ema = bt.ind.ExponentialSmoothing(self.data,
                                             period=self.params.period,

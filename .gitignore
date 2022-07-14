@@ -1,6 +1,7 @@
 *.html
 setup.py
 
+backtrader2/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
