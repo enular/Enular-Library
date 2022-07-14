@@ -28,7 +28,6 @@ class FirstWrapper(enular.indicators.MovingAverageSlow):
 class SecondWrapper(enular.indicators.BollingerBands):
     params = (('period',20),)
 
-
 class STBWrapper(enular.indicators.ScalToBool):
     params = (('indicator_a',SecondWrapper),('indicator_b',FirstWrapper),)
 
