@@ -26,8 +26,10 @@
 ############################################################################
 from __future__ import (absolute_import, division, print_function, unicode_literals)
 import backtrader as bt
-from Moving_Averages import EMA
-
+#from Moving_Averages import EMA
+import enular
+from enular.indicators import *
+#from .Moving_Averages import *
 
 class MACD(bt.Indicator):
 
