@@ -36,7 +36,7 @@ class BTBWrapper(enular.indicators.BoolToBool):
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
-    ee.addstrategy(enular.strategies.ScalToOrder, indicator_a = SecondWrapper, indicator_b = FirstWrapper)
+    ee.addstrategy(enular.strategies.ScalToOrder, indicator_a = enular.indicators.MACD, indicator_b = enular.indicators.MACD)
 
     start_portfolio_value = ee.broker.getvalue()
 

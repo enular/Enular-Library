@@ -157,8 +157,8 @@ class LaguerreFilter(bt.indicators.LaguerreFilter):
     pass
 
 #Scalar:
-class MACD(bt.indicators.MACD):
-    pass
+#class MACD(bt.indicators.MACD):
+#    pass
 
 #Scalar:
 class MACDHisto(bt.indicators.MACDHisto):
