@@ -22,8 +22,8 @@ ee.adddata(data1)
 
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
-class FirstWrapper(enular.indicators.MovingAverageSlow):
-    params = (('period',50),)
+class FirstWrapper(enular.indicators.MACD):
+    params = (('m1_period',10),)
 
 class SecondWrapper(enular.indicators.AccelerationDecelerationOscillator):
     params = (('period',20),)
@@ -41,7 +41,7 @@ class TempStrat(enular.Strategy):
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
-    ee.addstrategy(enular.strategies.ScalToOrder, indicator_a = enular.indicators.MACD, indicator_b = SecondWrapper)
+    ee.addstrategy(enular.strategies.ScalToOrder, indicator_a = FirstWrapper, indicator_b = SecondWrapper)
 
     start_portfolio_value = ee.broker.getvalue()
 
