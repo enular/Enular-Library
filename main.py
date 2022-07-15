@@ -25,7 +25,7 @@ ee.addsizer(bt.sizers.SizerFix, stake=3)
 class FirstWrapper(enular.indicators.MovingAverageSlow):
     params = (('period',50),)
 
-class SecondWrapper(enular.indicators.BollingerBands):
+class SecondWrapper(enular.indicators.AccelerationDecelerationOscillator):
     params = (('period',20),)
 
 class STBWrapper(enular.indicators.ScalToBool):
