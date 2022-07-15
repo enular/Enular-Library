@@ -23,7 +23,7 @@ ee.adddata(data1)
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
 class FirstWrapper(enular.indicators.MACD):
-    params = (('m1_period',10),)
+    params = (('m1_period',15),)
 
 class SecondWrapper(enular.indicators.AccelerationDecelerationOscillator):
     params = (('period',20),)
@@ -46,14 +46,13 @@ if __name__ == '__main__' and sys.argv[1] == 'test':
     start_portfolio_value = ee.broker.getvalue()
 
     results = ee.run()
-    ee.plot()
 
     end_portfolio_value = ee.broker.getvalue()
     pnl = end_portfolio_value - start_portfolio_value
     print(f'Starting Portfolio Value: {start_portfolio_value:2f}')
     print(f'Final Portfolio Value: {end_portfolio_value:2f}')
     print(f'PnL: {pnl:.2f}')
-    ee.plot()
+    ee.plot(iplot=False)
 
 if __name__ == '__main__' and sys.argv[1] == 'run':
 
