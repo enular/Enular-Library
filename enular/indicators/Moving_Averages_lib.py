@@ -26,9 +26,9 @@
 ############################################################################
 from __future__ import (absolute_import, division, print_function, unicode_literals)
 import backtrader as bt
+import enular
 
-
-class SMA(bt.Indicator):
+class SMA(enular.Indicator):
 
     """
     Simple Moving Average - calculates the average price over 'n' periods.

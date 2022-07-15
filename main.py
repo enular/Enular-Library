@@ -41,7 +41,7 @@ class TempStrat(enular.Strategy):
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
-    ee.addstrategy(enular.strategies.BoolToOrderAnd, indicator_a = enular.indicators.MACDHisto, indicator_b = enular.indicators.MACDHisto)
+    ee.addstrategy(enular.strategies.ScalToOrder, indicator_a = enular.indicators.MACD, indicator_b = SecondWrapper)
 
     start_portfolio_value = ee.broker.getvalue()
 
