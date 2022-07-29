@@ -16,7 +16,7 @@ class VTVCustom(enular.IndicatorOperation):
 
     lines = ('vtvcustom',)
 
-    def trade_logic(self):
+    def init_logic(self):
 
         operation = self.data0 + self.data1
         self.lines.vtvcustom = operation
@@ -25,7 +25,7 @@ class VTBCrossover(enular.IndicatorOperation):
 
     lines = ('vtbcrossover',)
 
-    def trade_logic(self):
+    def init_logic(self):
 
         upcross = bt.indicators.CrossUp(self.data0, self.data1)
         downcross = bt.indicators.CrossDown(self.data0, self.data1)
@@ -45,7 +45,7 @@ class BTBBase(enular.IndicatorOperation):
 
         return stand_data
 
-    def b_trade_logic(self):
+    def next_logic(self):
         pass
 
     def next(self):
@@ -53,13 +53,13 @@ class BTBBase(enular.IndicatorOperation):
         self.lines.temp0[0] = self.b_standardise(self.data0[0])
         self.lines.temp1[0] = self.b_standardise(self.data1[0])
 
-        self.b_trade_logic()
+        self.next_logic()
 
 class BTBAnd(BTBBase):
 
     lines = ('btband','temp0','temp1',)
 
-    def b_trade_logic(self):
+    def next_logic(self):
 
         operation = (self.lines.temp0[0] + self.lines.temp1[0])/2
         self.lines.btband[0] = self.b_standardise(operation)
@@ -68,7 +68,7 @@ class BTBOr(BTBBase):
 
     lines = ('btbor','temp0','temp1',)
 
-    def b_trade_logic(self):
+    def next_logic(self):
 
         operation = self.lines.temp0[0] + self.lines.temp1[0]
         self.lines.btbor[0] = self.b_standardise(operation)

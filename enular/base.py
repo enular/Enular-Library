@@ -40,7 +40,7 @@ class Cerebro(bt.Cerebro):
 
 class Dummy(bt.Indicator):    
     
-    lines = lines = ('dummy',)
+    lines = ('dummy',)
 
     def next(self):
         self.lines.dummy[0] = 0.0
@@ -55,7 +55,7 @@ class IndicatorOperation(bt.Indicator):
 
     plotinfo = dict(subplot=False)
 
-    def trade_logic(self):
+    def init_logic(self):
         pass
 
     def __init__(self):
@@ -63,7 +63,7 @@ class IndicatorOperation(bt.Indicator):
         self.data0 = self.params.indicator_a(self.data)
         self.data1 = self.params.indicator_b(self.data)
 
-        self.trade_logic()
+        self.init_logic()
 
 class StrategyOperation(bt.Strategy):
     
