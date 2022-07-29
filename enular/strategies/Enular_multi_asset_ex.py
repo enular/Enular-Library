@@ -1,6 +1,8 @@
 
 import backtrader as bt
 import yahoo_fin.stock_info as si
+from backtrader.indicators import DMA
+
 
 class Enular_Strategy_Example(bt.Strategy):
 
@@ -11,33 +13,39 @@ class Enular_Strategy_Example(bt.Strategy):
     def __init__(self):
         self.holding = dict()
         self.stoch = dict()
+        self.condition = dict()
 
         for i, d in enumerate(self.datas):
             self.stoch[d] = dict()
-            self.stoch[d]['highest'] = bt.ind.Highest(d.close, period=self.p.k_period, plot=False)
-            self.stoch[d]['lowest'] = bt.ind.Lowest(d.close, period=self.p.d_period, plot=False)
-            self.stoch[d]['k'] = (d.close - self.stoch[d]['lowest']) / (self.stoch[d]['highest'] - self.stoch[d]['lowest'])
-            self.stoch[d]['d'] = bt.ind.EMA(self.stoch[d]['k'], period=self.p.d_period, plot=False)
-            self.stoch[d]['v'] = abs(self.stoch[d]['k'] - self.stoch[d]['k'](-1))
-            self.stoch[d]['plot'] = bt.ind.StochasticFast(d, period=self.p.k_period, period_dfast=self.p.d_period)
+            self.condition[d] = dict()
+            self.stoch[d]['sto'] = bt.ind.StochasticFast(d, period=self.p.k_period, period_dfast=self.p.d_period, movav=DMA)
+            self.stoch[d]['v'] = abs(self.stoch[d]['sto'].lines.percK - self.stoch[d]['sto'].lines.percK(-1))
+            self.condition[d]['close_long'] = bt.ind.CrossUp(self.stoch[d]['sto'].lines.percK, 40.0, plot=False)
+            self.condition[d]['close_short'] = bt.ind.CrossDown(self.stoch[d]['sto'].lines.percK, 60.0, plot=False)
 
     def next(self):
         for i, d in enumerate(self.datas):
             pos = self.getposition(d)
 
-            if not pos:
-                if self.stoch[d]['v'][0] > self.stoch[d]['v'][-1] and \
-                    self.stoch[d]['k'][0] < 20 and \
-                    self.stoch[d]['d'][0] < 20 and \
-                    self.stoch[d]['k'][0] <= self.stoch[d]['d'][0]:
+            long = self.stoch[d]['v'][0] > self.stoch[d]['v'][-1] and \
+                    self.stoch[d]['sto'].lines.percK[0] < 20 and \
+                    self.stoch[d]['sto'].lines.percD[0] < 20 and \
+                    self.stoch[d]['sto'].lines.percK[0] <= self.stoch[d]['sto'].lines.percD[0]
 
+            close_long = self.condition[d]['close_long'][0]
+
+            short = self.stoch[d]['v'][0] > self.stoch[d]['v'][-1] and \
+                    self.stoch[d]['sto'].lines.percK[0] > 80 and \
+                    self.stoch[d]['sto'].lines.percD[0] > 80 and \
+                    self.stoch[d]['sto'].lines.percK[0] >= self.stoch[d]['sto'].lines.percD[0]
+
+            close_short = self.condition[d]['close_short'][0]
+
+            if not pos:
+                if long:
                     self.buy(data=d)
 
-                elif self.stoch[d]['v'][0] > self.stoch[d]['v'][-1] and \
-                    self.stoch[d]['k'][0] > 80 and \
-                    self.stoch[d]['d'][0] > 80 and \
-                    self.stoch[d]['k'][0] >= self.stoch[d]['d'][0]:
-
+                elif short:
                     self.sell(data=d)
                 
                 self.holding[d] = 0
@@ -45,7 +53,10 @@ class Enular_Strategy_Example(bt.Strategy):
             elif pos:
                 self.holding[d] += 1
                 
-                if self.stoch[d]['k'] in range(45, 65):
+                if close_long:
+                    self.close(data=d)
+
+                elif close_short:
                     self.close(data=d)
 
                 elif self.holding[d] >= self.p.hold:
