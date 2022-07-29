@@ -1,6 +1,7 @@
 
 import backtrader as bt
 import yahoo_fin.stock_info as si
+from backtrader.indicators import DMA
 
 class Enular_Strategy_Example(bt.Strategy):
 
@@ -11,17 +12,20 @@ class Enular_Strategy_Example(bt.Strategy):
     def __init__(self):
         self.holding = ()
 
-        highest = bt.ind.Highest(self.data, period=self.p.k_period, plot=False)
-        lowest = bt.ind.Lowest(self.data, period=self.p.d_period, plot=False)
-        self.k = (self.data - lowest) / (highest - lowest)
-        self.d = bt.ind.EMA(self.k, period=self.p.d_period, plot=False)
-        self.v1 = abs(self.k(-1) - self.k(-2))
-        self.v2 = abs(self.k - self.k(-1))
-        bt.ind.StochasticFast(self.data, period=self.p.k_period, period_dfast=self.p.d_period)
+        self.stoch = bt.ind.StochasticFast(self.data, period=self.p.k_period, period_dfast=self.p.d_period, movav=DMA)
+        self.v1 = abs(self.stoch.lines.percK(-1) - self.stoch.lines.percK(-2))
+        self.v2 = abs(self.stoch.lines.percK - self.stoch.lines.percK(-1))
+        self.close_long = bt.ind.CrossUp(self.stoch.lines.percK, 40.0, plot=False)
+        self.close_short = bt.ind.CrossDown(self.stoch.lines.percK, 60, plot=False)
+
 
     def next(self):
-        buy_signal = self.v2 > self.v1 and self.k < 20 and self.d < 20 and self.k >= self.d
-        sell_signal = self.v2 > self.v1 and self.k > 80 and self.d > 80 and self.k <= self.d
+        k = self.stoch.lines.percK
+        d = self.stoch.lines.percD
+        buy_signal = self.v2 > self.v1 and k < 20 and d < 20 and k >= d
+        sell_signal = self.v2 > self.v1 and k > 80 and d > 80 and k <= d
+        close_long = self.close_long
+        close_short = self.close_short
 
         if not self.position:
             if buy_signal:
@@ -35,7 +39,10 @@ class Enular_Strategy_Example(bt.Strategy):
         elif self.position:
             self.holding += 1
 
-            if self.k in range(45, 65):
+            if close_long:
+                self.close()
+
+            elif close_short:
                 self.close()
                 
             elif self.holding >= self.p.hold:
