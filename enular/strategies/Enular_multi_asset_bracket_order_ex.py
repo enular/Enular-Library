@@ -2,6 +2,7 @@
 import backtrader as bt
 import yahoo_fin.stock_info as si
 import datetime
+from backtrader.indicators import DMA
 
 class Enular_Strategy_Example(bt.Strategy):
 
@@ -9,7 +10,7 @@ class Enular_Strategy_Example(bt.Strategy):
                   k_period = 14,
                   d_period = 3,
                   p_entry_limit = 0.005,
-                  stop_loss = 0.02,
+                  stop_loss = 0.03,
                   take_price = 0.06,
                   valid = 10)
 
@@ -17,26 +18,38 @@ class Enular_Strategy_Example(bt.Strategy):
         self.ord = dict()
         self.holding = dict()
         self.stoch = dict()
+        self.condition = dict()
 
         for i, d in enumerate(self.datas):
             self.stoch[d] = dict()
-            self.stoch[d]['highest'] = bt.ind.Highest(d.close, period=self.p.k_period, plot=False)
-            self.stoch[d]['lowest'] = bt.ind.Lowest(d.close, period=self.p.d_period, plot=False)
-            self.stoch[d]['k'] = (d.close - self.stoch[d]['lowest']) / (self.stoch[d]['highest'] - self.stoch[d]['lowest'])
-            self.stoch[d]['d'] = bt.ind.EMA(self.stoch[d]['k'], period=self.p.d_period, plot=False)
-            self.stoch[d]['v'] = abs(self.stoch[d]['k'] - self.stoch[d]['k'](-1))
-            self.stoch[d]['plot'] = bt.ind.StochasticFast(d, period=self.p.k_period, period_dfast=self.p.d_period)
+            self.condition[d] = dict()
+            self.stoch[d]['sto'] = bt.ind.StochasticFast(d, period=self.p.k_period, period_dfast=self.p.d_period, movav=DMA)
+            self.stoch[d]['v'] = abs(self.stoch[d]['sto'].lines.percK - self.stoch[d]['sto'].lines.percK(-1))
+            self.condition[d]['close_long'] = bt.ind.CrossUp(self.stoch[d]['sto'].lines.percK, 40.0, plot=False)
+            self.condition[d]['close_short'] = bt.ind.CrossDown(self.stoch[d]['sto'].lines.percK, 60.0, plot=False)
 
     def next(self):
         for i, d in enumerate(self.datas):
             dt, dn = self.datetime.date(), d._name
             pos = self.getposition(d)
 
+            long = self.stoch[d]['v'][0] > self.stoch[d]['v'][-1] and \
+                    self.stoch[d]['sto'].lines.percK[0] < 20 and \
+                    self.stoch[d]['sto'].lines.percD[0] < 20 and \
+                    self.stoch[d]['sto'].lines.percK[0] <= self.stoch[d]['sto'].lines.percD[0]
+
+            close_long = self.condition[d]['close_long'][0]
+
+            short = self.stoch[d]['v'][0] > self.stoch[d]['v'][-1] and \
+                    self.stoch[d]['sto'].lines.percK[0] > 80 and \
+                    self.stoch[d]['sto'].lines.percD[0] > 80 and \
+                    self.stoch[d]['sto'].lines.percK[0] >= self.stoch[d]['sto'].lines.percD[0]
+
+            close_short = self.condition[d]['close_short'][0]
+
             if not pos and not self.ord.get(d, None):
-                if self.stoch[d]['v'][0] > self.stoch[d]['v'][-1] and \
-                    self.stoch[d]['k'][0] < 20 and \
-                    self.stoch[d]['d'][0] < 20 and \
-                    self.stoch[d]['k'][0] >= self.stoch[d]['d'][0]:
+                
+                if long:
 
                     p = d.close[0] * (1.0 - self.p.p_entry_limit)
                     stop = p * (1.0 - self.p.stop_loss)
@@ -54,14 +67,11 @@ class Enular_Strategy_Example(bt.Strategy):
 
                     self.ord[d] = [L1, L2, L3]
 
-                    print('{} {} Main {} Stop {} Limit {}'.format(dt,
+                    print('{} {} Long Position: Main {} Stop {} Limit {}'.format(dt,
                                                                   dn,
                                                                   *(x.ref for x in self.ord[d])))
 
-                elif self.stoch[d]['v'][0] > self.stoch[d]['v'][-1] and \
-                    self.stoch[d]['k'][0] > 80 and \
-                    self.stoch[d]['d'][0] > 80 and \
-                    self.stoch[d]['k'][0] <= self.stoch[d]['d'][0]:
+                elif short:
 
                     p = d.close[0] * (1.0 + self.p.p_entry_limit)
                     stop = p * (1.0 + self.p.stop_loss)
@@ -79,7 +89,7 @@ class Enular_Strategy_Example(bt.Strategy):
 
                     self.ord[d] = [S1, S2, S3]
 
-                    print('{} {} Main {} Stop {} Limit {}'.format(dt,
+                    print('{} {} Short Position: Main {} Stop {} Limit {}'.format(dt,
                                                                   dn,
                                                                   *(x.ref for x in self.ord[d])))
                 
@@ -88,11 +98,20 @@ class Enular_Strategy_Example(bt.Strategy):
             elif pos:
                 self.holding[d] += 1
 
-                if self.stoch[d]['k'] in range(45, 65):
+                if close_long:
                     ord = self.close(data=d)
                     self.ord[d].append(ord)
                     self.cancel(self.ord[d][1])
-                    print('{} {} Manual Close: %D Crossed 50% Threshold. Order Ref: {}'.format(
+                    print('{} {} Manual Close of Long Position: %K Crossed 40% Threshold. Order Ref: {}'.format(
+                                                                dt,
+                                                                dn,
+                                                                ord.ref))
+
+                elif close_short:
+                    ord = self.close(data=d)
+                    self.ord[d].append(ord)
+                    self.cancel(self.ord[d][1])
+                    print('{} {} Manual Close of Short Position: %K Crossed 60% Threshold. Order Ref: {}'.format(
                                                                 dt,
                                                                 dn,
                                                                 ord.ref))
