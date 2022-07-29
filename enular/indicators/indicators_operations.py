@@ -12,31 +12,40 @@ from backtrader.indicators import Average
 
 import enular
 
-class ScalToScal(enular.Indicator):
+class VTVCustom(enular.Indicator):
 
-    lines = ('sts',)
+    lines = ('vtvcustom',)
 
     def trade_logic(self):
 
         operation = self.data0 + self.data1
-        self.lines.sts = operation
+        self.lines.vtvcustom = operation
 
-class ScalToBool(enular.Indicator):
+class VTBCrossover(enular.Indicator):
 
-    lines = ('stb',)
+    lines = ('vtbcrossover',)
 
     def trade_logic(self):
 
         upcross = bt.indicators.CrossUp(self.data0, self.data1)
         downcross = bt.indicators.CrossDown(self.data0, self.data1)
         operation = upcross - downcross
-        self.lines.stb = operation
+        self.lines.vtb = operation
 
-class BoolToBool(enular.Indicator):
+class BTBAnd(enular.Indicator):
 
-    lines = ('btb',)
+    lines = ('btband',)
 
     def trade_logic(self):
 
-        operation = (self.data0 + self.data1)/2
-        self.lines.btb = operation
+        operation = self.data0 * self.data1
+        self.lines.btband = operation
+
+class BTBOr(enular.Indicator):
+
+    lines = ('btbor',)
+
+    def trade_logic(self):
+
+        operation = self.data0 + self.data1
+        self.lines.btband = operation

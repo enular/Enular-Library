@@ -12,7 +12,7 @@ import sklearn
 
 import enular
 
-class ScalToOrder(enular.Strategy):
+class VTOCrossover(enular.Strategy):
 
     def trade_logic(self):
                   
@@ -24,7 +24,7 @@ class ScalToOrder(enular.Strategy):
             self.log(f'SELL CREATE {self.dataclose[0]:2f}')
             self.order = self.sell()
 
-class BoolToOrderAnd(enular.Strategy):
+class BTOAnd(enular.Strategy):
 
     def trade_logic(self):
                   
@@ -36,7 +36,7 @@ class BoolToOrderAnd(enular.Strategy):
             self.log(f'SELL CREATE {self.dataclose[0]:2f}')
             self.order = self.sell()
 
-class BoolToOrderOr(enular.Strategy):
+class BTOOr(enular.Strategy):
 
     def trade_logic(self):
                   
