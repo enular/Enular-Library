@@ -12,7 +12,7 @@ import sklearn
 
 import enular
 
-class CustomStrategyTest(enular.Strategy):
+class CustomStrategyTest(enular.StrategyOperation):
 
     def __init__(self):
 
@@ -42,7 +42,7 @@ class CustomStrategyTest(enular.Strategy):
                 self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
                 self.order = self.close()
 
-class MAcrossover(enular.Strategy): 
+class MAcrossover(enular.StrategyOperation): 
     # Moving average parameters
     params = (('pfast',20),('pslow',50),)
 
@@ -96,7 +96,7 @@ class MAcrossover(enular.Strategy):
                 self.log(f'CLOSE CREATE {self.dataclose[0]:2f}')
                 self.order = self.close()
 
-class AverageTrueRange(enular.Strategy):
+class AverageTrueRange(enular.StrategyOperation):
 
 	def log(self, txt, dt=None):
 		dt = dt or self.datas[0].datetime.date(0)
@@ -116,11 +116,11 @@ class AverageTrueRange(enular.Strategy):
 
 		self.log(f'Close: {self.dataclose[0]:.2f}, ATR: {ATR:.4f}')
 
-class MachineLearningClassify(enular.Strategy):
+class MachineLearningClassify(enular.StrategyOperation):
     pass
 
-class MachineLearningRegression(enular.Strategy):
+class MachineLearningRegression(enular.StrategyOperation):
     pass
 
-class MachineLearningReinforcement(enular.Strategy):
+class MachineLearningReinforcement(enular.StrategyOperation):
     pass

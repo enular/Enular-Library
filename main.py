@@ -26,22 +26,22 @@ class FirstWrapper(enular.indicators.MACD):
     params = (('m1_period',15),)
 
 class SecondWrapper(enular.indicators.AccelerationDecelerationOscillator):
-    params = (('period',20),)
+    params = (('period',25),)
 
-class STBWrapper(enular.indicators.ScalToBool):
-    params = (('indicator_a',SecondWrapper),('indicator_b',FirstWrapper),)
+class VTBWrapper(enular.indicators.VTBCrossover):
+    params = (('indicator_a',FirstWrapper),('indicator_b',SecondWrapper),)
 
-class BTBWrapper(enular.indicators.BoolToBool):
-    params = (('indicator_a',STBWrapper),('indicator_b',STBWrapper),)
+class BTBWrapper(enular.indicators.BTBOr):
+    params = (('indicator_a',VTBWrapper),('indicator_b',enular.Dummy),)
 
-class TempStrat(enular.Strategy):
+class TempStrat(enular.StrategyOperation):
     def __init__(self):
         self.order = None
         enular.indicators.MACDHisto(self.data, m1_period=12, m2_period=30, signal_period=10)
 
 if __name__ == '__main__' and sys.argv[1] == 'test':
     
-    ee.addstrategy(enular.strategies.ScalToOrder, indicator_a = FirstWrapper, indicator_b = SecondWrapper)
+    ee.addstrategy(enular.strategies.BTOAnd, indicator_a = BTBWrapper, indicator_b = BTBWrapper)
 
     start_portfolio_value = ee.broker.getvalue()
 

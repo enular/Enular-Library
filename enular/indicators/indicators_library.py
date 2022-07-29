@@ -331,13 +331,13 @@ class CrossOver(bt.indicators.CrossOver):
         self.lines.crossover = upcross - downcross
 
 #Boolean
-class MachineLearningClassify(enular.Indicator):    
+class MachineLearningClassify(enular.IndicatorOperation):    
 
     def __init__(self):
         pass
 
 #Scalar
-class MachineLearningRegression(enular.Indicator):    
+class MachineLearningRegression(enular.IndicatorOperation):    
 
     def __init__(self):
         pass

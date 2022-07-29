@@ -12,7 +12,7 @@ import sklearn
 
 import enular
 
-class VTOCrossover(enular.Strategy):
+class VTOCrossover(enular.StrategyOperation):
 
     def trade_logic(self):
                   
@@ -24,26 +24,28 @@ class VTOCrossover(enular.Strategy):
             self.log(f'SELL CREATE {self.dataclose[0]:2f}')
             self.order = self.sell()
 
-class BTOAnd(enular.Strategy):
+class BTOAnd(enular.StrategyOperation):
 
     def trade_logic(self):
                   
-        if self.indicator_a > 0 and self.indicator_b > 0:
+        #print(self.indicator_a[0])
+
+        if self.indicator_a[0] >= 1.0 and self.indicator_b[0] >= 1.0:
             self.log(f'BUY CREATE {self.dataclose[0]:2f}')
             self.order = self.buy()
             
-        elif self.indicator_a < 0 and self.indicator_b < 0:
+        elif self.indicator_a[0] <= -1.0 and self.indicator_b[0] <= -1.0:
             self.log(f'SELL CREATE {self.dataclose[0]:2f}')
             self.order = self.sell()
 
-class BTOOr(enular.Strategy):
+class BTOOr(enular.StrategyOperation):
 
     def trade_logic(self):
                   
-        if self.indicator_a > 0 or self.indicator_b > 0:
+        if self.indicator_a[0] >= 1 or self.indicator_b[0]>= 1:
             self.log(f'BUY CREATE {self.dataclose[0]:2f}')
             self.order = self.buy()
             
-        elif self.indicator_a < 0 or self.indicator_b < 0:
+        elif self.indicator_a[0] <= -1 or self.indicator_b[0] <= -1:
             self.log(f'SELL CREATE {self.dataclose[0]:2f}')
             self.order = self.sell()

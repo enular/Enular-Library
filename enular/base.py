@@ -39,9 +39,14 @@ class Cerebro(bt.Cerebro):
             webbrowser.open('file://' + os.path.realpath('stats.html'))
 
 class Dummy(bt.Indicator):    
-    pass
+    
+    lines = lines = ('dummy',)
 
-class Indicator(bt.Indicator):
+    def next(self):
+        self.lines.dummy[0] = 0.0
+
+
+class IndicatorOperation(bt.Indicator):
     
     params = (
         ('indicator_a',Dummy),
@@ -60,7 +65,7 @@ class Indicator(bt.Indicator):
 
         self.trade_logic()
 
-class Strategy(bt.Strategy):
+class StrategyOperation(bt.Strategy):
     
     params = (
         ('indicator_a',Dummy),
