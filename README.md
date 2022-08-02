@@ -38,3 +38,5 @@ Development in progress:
 - Templates
 - Documentation
 - User forum
+- Resaerch
+- Data hosting and supply

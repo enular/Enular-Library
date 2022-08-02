@@ -12,26 +12,6 @@ from backtrader.indicators import Average
 
 import enular
 
-class VTVCustom(enular.IndicatorOperation):
-
-    lines = ('vtvcustom',)
-
-    def init_logic(self):
-
-        operation = self.data0 + self.data1
-        self.lines.vtvcustom = operation
-
-class VTBCrossover(enular.IndicatorOperation):
-
-    lines = ('vtbcrossover',)
-
-    def init_logic(self):
-
-        upcross = bt.indicators.CrossUp(self.data0, self.data1)
-        downcross = bt.indicators.CrossDown(self.data0, self.data1)
-        operation = upcross - downcross
-        self.lines.vtbcrossover = operation
-
 class BTBBase(enular.IndicatorOperation):
 
     def b_standardise(self,stand_data):
@@ -72,3 +52,41 @@ class BTBOr(BTBBase):
 
         operation = self.lines.temp0[0] + self.lines.temp1[0]
         self.lines.btbor[0] = self.b_standardise(operation)
+
+class BTBSo(BTBBase):
+
+    lines = ('btbso','temp0','temp1',)
+
+    def next_logic(self):
+
+        operation = self.lines.temp0[0]
+        self.lines.btbso[0] = self.b_standardise(operation)
+
+class BTBNot(BTBBase):
+
+    lines = ('btbnot','temp0','temp1',)
+
+    def next_logic(self):
+
+        operation = self.lines.temp0[0] * -1
+        self.lines.btbnot[0] = self.b_standardise(operation)
+
+class VTVCustom(enular.IndicatorOperation):
+
+    lines = ('vtvcustom',)
+
+    def init_logic(self):
+
+        operation = self.data0 + self.data1
+        self.lines.vtvcustom = operation
+
+class VTBCrossover(enular.IndicatorOperation):
+
+    lines = ('vtbcrossover',)
+
+    def init_logic(self):
+
+        upcross = bt.indicators.CrossUp(self.data0, self.data1)
+        downcross = bt.indicators.CrossDown(self.data0, self.data1)
+        operation = upcross - downcross
+        self.lines.vtbcrossover = operation
