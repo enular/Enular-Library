@@ -22,7 +22,7 @@ ee.adddata(data1)
 
 ee.addsizer(bt.sizers.SizerFix, stake=3)
 
-class FirstWrapper(enular.indicators.MACD):
+class FirstWrapper(enular.bt.indicators.MACD):
     params = (('m1_period',15),)
 
 class SecondWrapper(enular.indicators.AccelerationDecelerationOscillator):
