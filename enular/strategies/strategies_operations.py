@@ -49,3 +49,27 @@ class BTOOr(enular.StrategyOperation):
         elif self.indicator_a[0] <= -1 or self.indicator_b[0] <= -1:
             self.log(f'SELL CREATE {self.dataclose[0]:2f}')
             self.order = self.sell()
+
+class BTOSo(enular.StrategyOperation):
+
+    def trade_logic(self):
+                  
+        if self.indicator_a[0] >= 1:
+            self.log(f'BUY CREATE {self.dataclose[0]:2f}')
+            self.order = self.buy()
+            
+        elif self.indicator_a[0] <= -1:
+            self.log(f'SELL CREATE {self.dataclose[0]:2f}')
+            self.order = self.sell()
+
+class BTONot(enular.StrategyOperation):
+
+    def trade_logic(self):
+                  
+        if self.indicator_a[0] <= 1:
+            self.log(f'BUY CREATE {self.dataclose[0]:2f}')
+            self.order = self.buy()
+            
+        elif self.indicator_a[0] >= -1:
+            self.log(f'SELL CREATE {self.dataclose[0]:2f}')
+            self.order = self.sell()

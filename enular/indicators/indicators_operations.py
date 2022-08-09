@@ -71,6 +71,77 @@ class BTBNot(BTBBase):
         operation = self.lines.temp0[0] * -1
         self.lines.btbnot[0] = self.b_standardise(operation)
 
+class BTBXor(BTBBase):
+
+    lines = ('btbxor','temp0','temp1',)
+
+    def next_logic(self):
+
+        if self.lines.temp0[0] >= 1 and self.lines.temp1[0] == 0:
+            operation = 1
+        elif self.lines.temp0[0] == 0 and self.lines.temp1[0] >= 1:
+            operation = 1
+        if self.lines.temp0[0] <= -1 and self.lines.temp1[0] == 0:
+            operation = -1
+        elif self.lines.temp0[0] == 0 and self.lines.temp1[0] <= -1:
+            operation = -1
+        else:
+            operation = 0
+
+        self.lines.btbxor[0] = self.b_standardise(operation)
+
+class BTBXnor(BTBBase):
+
+    lines = ('btbxnor','temp0','temp1',)
+
+    def next_logic(self):
+
+        if self.lines.temp0[0] >= 1 and self.lines.temp1[0] >= 1:
+            operation = 1
+        elif self.lines.temp0[0] == 0 and self.lines.temp1[0] == 0:
+            operation = 1
+        elif self.lines.temp0[0] <= -1 and self.lines.temp1[0] <= -1:
+            operation = -1
+        else:
+            operation = 0
+
+        self.lines.btbxnor[0] = self.b_standardise(operation)
+
+class BTBNand(BTBBase):
+
+    lines = ('btbnand','temp0','temp1',)
+
+    def next_logic(self):
+
+        if self.lines.temp0[0] >= 1 and self.lines.temp1[0] == 0:
+            operation = 1
+        elif self.lines.temp0[0] == 0 and self.lines.temp1[0] >= 1:
+            operation = 1
+        elif self.lines.temp0[0] <= 0 and self.lines.temp1[0] <= -1:
+            operation = -1
+        elif self.lines.temp0[0] == 0 and self.lines.temp1[0] == 0:
+            operation = 1
+        elif self.lines.temp0[0] <= -1 and self.lines.temp1[0] <= 0:
+            operation = -1
+        else:
+            operation = 0
+
+        self.lines.btbnand[0] = self.b_standardise(operation)
+
+class BTBNor(BTBBase):
+
+    lines = ('btbnor','temp0','temp1',)
+
+    def next_logic(self):
+
+        if self.lines.temp0[0] == 0 and self.lines.temp1[0] == 0:
+            operation = 1
+        else:
+            operation = 0
+
+        self.lines.btbnor[0] = self.b_standardise(operation)
+
+
 class VTVCustom(enular.IndicatorOperation):
 
     lines = ('vtvcustom',)
@@ -79,6 +150,7 @@ class VTVCustom(enular.IndicatorOperation):
 
         operation = self.data0 + self.data1
         self.lines.vtvcustom = operation
+
 
 class VTBCrossover(enular.IndicatorOperation):
 
@@ -90,3 +162,16 @@ class VTBCrossover(enular.IndicatorOperation):
         downcross = bt.indicators.CrossDown(self.data0, self.data1)
         operation = upcross - downcross
         self.lines.vtbcrossover = operation
+
+class VTBCustom(BTBBase):
+
+    lines = ('vtbcustom','temp0','temp1',)
+
+    def next_logic(self):
+
+        if self.lines.temp0[0] >= 0 and self.lines.temp1[0] >= 0:
+            operation = 1
+        else:
+            operation = 0
+
+        self.lines.vtbcustom[0] = self.b_standardise(operation)

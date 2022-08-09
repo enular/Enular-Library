@@ -31,7 +31,7 @@ class SecondWrapper(enular.indicators.AccelerationDecelerationOscillator):
 class VTBWrapper(enular.indicators.VTBCrossover):
     params = (('indicator_a',FirstWrapper),('indicator_b',SecondWrapper),)
 
-class BTBWrapper(enular.indicators.BTBNot):
+class BTBWrapper(enular.indicators.BTBXor):
     params = (('indicator_a',VTBWrapper),('indicator_b',enular.Dummy),)
 
 class TempStrat(enular.StrategyOperation):
