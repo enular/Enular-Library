@@ -8,7 +8,7 @@ import scipy
 import sklearn
 import pandas
 import backtrader as bt
-from backtrader.indicators import Average
+import indicators
 
 import enular
 
@@ -158,8 +158,8 @@ class VTBCrossover(enular.IndicatorOperation):
 
     def init_logic(self):
 
-        upcross = bt.indicators.CrossUp(self.data0, self.data1)
-        downcross = bt.indicators.CrossDown(self.data0, self.data1)
+        upcross = indicators.CrossUp(self.data0, self.data1)
+        downcross = indicators.CrossDown(self.data0, self.data1)
         operation = upcross - downcross
         self.lines.vtbcrossover = operation
 

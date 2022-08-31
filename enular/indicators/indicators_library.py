@@ -8,20 +8,21 @@ import scipy
 import sklearn
 import pandas
 import backtrader as bt
+import indicators
 
 import enular
 
 #Scalar
 #Formula:   AcdDecOsc = AwesomeOscillator - SMA(AwesomeOscillator, period)
 #Scale:     Change in difference in average price
-class AccelerationDecelerationOscillator(bt.indicators.AccelerationDecelerationOscillator):
+class AccelerationDecelerationOscillator(indicators.AccelerationDecelerationOscillator):
     pass
 
 #Scalar
 #Formula:   median price = (high + low) / 2
 #           AO = SMA(median price, 5)- SMA(median price, 34)
 #Scale:     Difference in average price
-class AwesomeOscillator(bt.indicators.AwesomeOscillator):
+class AwesomeOscillator(indicators.AwesomeOscillator):
     pass
 
 #Scalar
@@ -29,91 +30,91 @@ class AwesomeOscillator(bt.indicators.AwesomeOscillator):
 #           up = 100 * (period - distance to highest high) / period
 #           down = 100 * (period - distance to lowest low) / period
 #Scale:     Period between peaks
-class AroonOscillator(bt.indicators.AroonOscillator):
+class AroonOscillator(indicators.AroonOscillator):
     pass
 
 #Scalar
 #Formula:   TrueRange = max(high - low, abs(high - prev_close), abs(prev_close - low)
 #           ATR = SmoothedMovingAverage(TrueRange, period)
 #Scale:     Price range
-class AverageTrueRange(bt.indicators.AverageTrueRange):
+class AverageTrueRange(indicators.AverageTrueRange):
     pass
 
 #Scalar
 #Scale:     Average price plus or minus standard deviations
 #Note:      As 3 lines, mid, top, and bot
-class BollingerBands(bt.indicators.BollingerBands):
+class BollingerBands(indicators.BollingerBands):
     pass
 
 #Scalar
 #Scale:     Percentage
-class BollingerBandsPct(bt.indicators.BollingerBandsPct):
+class BollingerBandsPerc(bt.indicators.BBPerc):
     pass
 
 #Scalar    
 #Scale:     Ratio
-class CommodityChannelIndex(bt.indicators.CommodityChannelIndex):
+class CommodityChannelIndex(indicators.CommodityChannelIndex):
     pass
 
 #Scalar
 #Scale:     Price
-class DoubleExponentialMovingAverage(bt.indicators.DoubleExponentialMovingAverage):
+class DoubleEMA(indicators.DoubleExponentialMovingAverage):
     pass
 
 #Scalar:    Price
-class TripleExponentialMovingAverage(bt.indicators.TripleExponentialMovingAverage):
+class TripleEMA(indicators.TripleExponentialMovingAverage):
     pass
 
 #Scale:     Standard deviation
-class StandardDeviation(bt.indicators.StandardDeviation):
+class StandardDeviation(indicators.StandardDeviation):
     pass
 
 #Scalar:    Deviation
-class MeanDeviation(bt.indicators.MeanDeviation):
+class MeanDeviation(indicators.MeanDeviation):
     pass
 
 #Scalar:    Price movement
-class DirectionalIndicator(bt.indicators.DirectionalIndicator):
+class DirectionalIndicator(indicators.DirectionalIndicator):
     pass
 
 #Scalar:    Price movement up
-class PlusDirectionalIndicator(bt.indicators.PlusDirectionalIndicator):
+class PlusDirectionalIndicator(indicators.PlusDirectionalIndicator):
     pass
 
 #Scalar:    Price movement down
-class MinusDirectionalIndicator(bt.indicators.MinusDirectionalIndicator):
+class MinusDirectionalIndicator(indicators.MinusDirectionalIndicator):
     pass
 
 #Scalar:    Price movement average
-class AverageDirectionalMovementIndex(bt.indicators.AverageDirectionalMovementIndex):
+class AverageDirectionalMovementIndex(indicators.AverageDirectionalMovementIndex):
     pass
 
 #Scalar:
-class AverageDirectionalMovementIndexRating(bt.indicators.AverageDirectionalMovementIndexRating):
+class AverageDirectionalMovementIndexRating(indicators.AverageDirectionalMovementIndexRating):
     pass
 
 #Scalar:
-class DirectionalMovementIndex(bt.indicators.DirectionalMovementIndex):
+class DirectionalMovementIndex(indicators.DirectionalMovementIndex):
     pass
 
 #Scalar:
-class DirectionalMovement(bt.indicators.DirectionalMovement):
+class DirectionalMovement(indicators.DirectionalMovement):
     pass
 
 #Scalar:
-class DicksonMovingAverage(bt.indicators.DicksonMovingAverage):
+class DicksonMovingAverage(indicators.DicksonMovingAverage):
     pass
 
 #Scalar:
-class DetrendedPriceOscillator(bt.indicators.DetrendedPriceOscillator):
+class DetrendedPriceOscillator(indicators.DetrendedPriceOscillator):
     pass
 
 #Scalar:
-class DV2(bt.indicators.DV2):
+class DV2(indicators.DV2):
     pass
 
 #Scalar:
-class ExponentialMovingAverage(bt.indicators.ExponentialMovingAverage):
+class ExponentialMovingAverage(indicators.ExponentialMovingAverage):
     pass
 
 #Scalar
@@ -121,200 +122,172 @@ class Envelope(bt.indicators.Envelope):
     pass
 
 #Scalar:
-class haDelta(bt.indicators.haDelta):
+class HADelta(indicators.HADelta):
     pass
 
 #Scalar:
-class HeikinAshi(bt.indicators.HeikinAshi):
+class HullMovingAverage(indicators.HullMovingAverage):
     pass
 
 #Scalar:
-class HullMovingAverage(bt.indicators.HullMovingAverage):
+class Ichimoku(indicators.Ichimoku):
     pass
 
 #Scalar:
-class HurstExponent(bt.indicators.HurstExponent):
+class AdaptiveMovingAverage(indicators.AdaptiveMovingAverage):
     pass
 
 #Scalar:
-class Ichimoku(bt.indicators.Ichimoku):
+class KnowSureThing(indicators.KnowSureThing):
     pass
 
 #Scalar:
-class AdaptiveMovingAverage(bt.indicators.AdaptiveMovingAverage):
+class LaguerreRSI(indicators.LaguerreRSI):
     pass
 
 #Scalar:
-class KnowSureThing(bt.indicators.KnowSureThing):
+class LaguerreFilter(indicators.LaguerreFilter):
     pass
 
 #Scalar:
-class LaguerreRSI(bt.indicators.LaguerreRSI):
+class MACD(indicators.MACD):
+   pass
+
+#Scalar:
+class MACDHisto(indicators.MACDHisto):
     pass
 
 #Scalar:
-class LaguerreFilter(bt.indicators.LaguerreFilter):
+class Momentum(indicators.Momentum):
     pass
 
 #Scalar:
-#class MACD(bt.indicators.MACD):
-#    pass
-
-#Scalar:
-class MACDHisto(bt.indicators.MACDHisto):
+class MomentumOscillator(indicators.MomentumOscillator):
     pass
 
 #Scalar:
-class Momentum(bt.indicators.Momentum):
+class RateOfChange(indicators.RateOfChange):
     pass
 
 #Scalar:
-class MomentumOscillator(bt.indicators.MomentumOscillator):
+class RateOfChange100(indicators.RateOfChange100):
     pass
 
 #Scalar:
-class RateOfChange(bt.indicators.RateOfChange):
+class OscillatorMixIn(indicators.OscillatorMixIn):
     pass
 
 #Scalar:
-class RateOfChange100(bt.indicators.RateOfChange100):
+class Oscillator(indicators.Oscillator):
     pass
 
 #Scalar:
-class OLS_Slope_InterceptN(bt.indicators.OLS_Slope_InterceptN):
+class PercentChange(indicators.PercentChange):
     pass
 
 #Scalar:
-class OLS_TransformationN(bt.indicators.OLS_TransformationN):
+class PercentRank(indicators.PercentRank):
     pass
 
 #Scalar:
-class OLS_BetaN(bt.indicators.OLS_BetaN):
+class PivotPoint(indicators.PivotPoint):
     pass
 
 #Scalar:
-class CointN(bt.indicators.CointN):
+class FibonacciPivotPoint(indicators.FibonacciPivotPoint):
     pass
 
 #Scalar:
-class OscillatorMixIn(bt.indicators.OscillatorMixIn):
+class DemarkPivotPoint(indicators.DemarkPivotPoint):
     pass
 
 #Scalar:
-class Oscillator(bt.indicators.Oscillator):
+class PrettyGoodOscillator(indicators.PrettyGoodOscillator):
     pass
 
 #Scalar:
-class PercentChange(bt.indicators.PercentChange):
+class PriceOscillator(indicators.PriceOscillator):
     pass
 
 #Scalar:
-class PercentRank(bt.indicators.PercentRank):
+class PercentagePriceOscillator(indicators.PercentagePriceOscillator):
     pass
 
 #Scalar:
-class PivotPoint(bt.indicators.PivotPoint):
+class ParabolicSAR(indicators.ParabolicSAR):
     pass
 
 #Scalar:
-class FibonacciPivotPoint(bt.indicators.FibonacciPivotPoint):
+class RelativeMomentumIndex(indicators.RelativeMomentumIndex):
     pass
 
 #Scalar:
-class DemarkPivotPoint(bt.indicators.DemarkPivotPoint):
+class RelativeStrengthIndex(indicators.RelativeStrengthIndex):
     pass
 
 #Scalar:
-class PrettyGoodOscillator(bt.indicators.PrettyGoodOscillator):
+class SmoothedMovingAverage(indicators.SmoothedMovingAverage):
     pass
 
 #Scalar:
-class PriceOscillator(bt.indicators.PriceOscillator):
+class StochasticFast(indicators.StochasticFast):
     pass
 
 #Scalar:
-class PercentagePriceOscillator(bt.indicators.PercentagePriceOscillator):
+class Stochastic(indicators.Stochastic):
     pass
 
 #Scalar:
-class ParabolicSAR(bt.indicators.ParabolicSAR):
+class StochasticFull(indicators.StochasticFull):
     pass
 
 #Scalar:
-class RelativeMomentumIndex(bt.indicators.RelativeMomentumIndex):
+class TRIXSignal(indicators.TRIXSignal):
     pass
 
 #Scalar:
-class RelativeStrengthIndex(bt.indicators.RelativeStrengthIndex):
-    pass
-
-#Scalar:
-class SmoothedMovingAverage(bt.indicators.SmoothedMovingAverage):
-    pass
-
-#Scalar:
-class StochasticFast(bt.indicators.StochasticFast):
-    pass
-
-#Scalar:
-class Stochastic(bt.indicators.Stochastic):
-    pass
-
-#Scalar:
-class StochasticFull(bt.indicators.StochasticFull):
-    pass
-
-#Scalar:
-class Trix(bt.indicators.Trix):
-    pass
-
-#Scalar:
-class TrixSignal(bt.indicators.TrixSignal):
-    pass
-
-#Scalar:
-class TrueStrengthIndicator(bt.indicators.TrueStrengthIndicator):
+class TrueStrengthIndex(indicators.TrueStrengthIndex):
     pass
 
 #Scalar
 #Scale:     Percentage (or Ratio if not x100)
-class UltimateOscillator(bt.indicators.UltimateOscillator):
+class UltimateOscillator(indicators.UltimateOscillator):
     pass
 
 #Scalar:
-class Vortex(bt.indicators.Vortex):
+class Vortex(indicators.Vortex):
     pass
 
 #Scalar:
-class WilliamsR(bt.indicators.WilliamsR):
+class WilliamsR(indicators.WilliamsR):
     pass
 
 #Scalar:
-class WilliamsAD(bt.indicators.WilliamsAD):
+class WilliamsAD(indicators.WilliamsAD):
     pass
 
 #Scalar:
-class WeightedMovingAverage(bt.indicators.WeightedMovingAverage):
+class WeightedMovingAverage(indicators.WeightedMovingAverage):
     pass
 
 #Scalar:
-class ZeroLagExponentialMovingAverage(bt.indicators.ZeroLagExponentialMovingAverage):
+class ZeroLagExponentialMovingAverage(indicators.ZeroLagExponentialMovingAverage):
     pass
 
 #Scalar:
-class ZeroLagIndicator(bt.indicators.ZeroLagIndicator):
+class ZeroLagIndicator(indicators.ZeroLagIndicator):
     pass
 
 #Scalar
-class MovingAverageFast(bt.indicators.MovingAverageSimple):    
+class SMAFast(indicators.SMA):    
     params = (('period',20),)
 
 #Scalar
-class MovingAverageSlow(bt.indicators.MovingAverageSimple):
+class SMASlow(indicators.SMA):
     params = (('period',50),)
 
 #Scalar: diff = data - data1, upcross =  last_non_zero_diff < 0 and data0(0) > data1(0), downcross = last_non_zero_diff > 0 and data0(0) < data1(0), crossover = upcross - downcross
-class CrossOver(bt.indicators.CrossOver):
+class CrossOver(indicators.CrossOver):
 
     params = (('pfast',20),('pslow',50),)
 
@@ -322,8 +295,8 @@ class CrossOver(bt.indicators.CrossOver):
 
     def __init__(self):
 
-        self.data0 = MovingAverageFast(self.data, period = self.params.pfast)
-        self.data1 = MovingAverageSlow(self.data, period = self.params.pslow)
+        self.data0 = SMAFast(self.data, period = self.params.pfast)
+        self.data1 = SMASlow(self.data, period = self.params.pslow)
 
         upcross = bt.indicators.CrossUp(self.data0, self.data1)
         downcross = bt.indicators.CrossDown(self.data0, self.data1)
