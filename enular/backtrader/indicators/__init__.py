@@ -27,7 +27,7 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from backtrader.indicator import Indicator
+from backtrader import Indicator
 from backtrader.functions import *
 
 
@@ -82,5 +82,5 @@ from .kst import *
 from .ichimoku import *
 from .vortex import *
 
-from .indicators_operations import *
-from .indicators_library import *
+# from .indicators_operations import *
+# from .indicators_library import *

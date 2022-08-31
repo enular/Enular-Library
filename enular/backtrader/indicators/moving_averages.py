@@ -35,7 +35,7 @@ from backtrader.utils.py3 import MAXINT
 
 
 
-class SimpleMovingAverage(Indicator):
+class SimpleMovingAverage(MovingAverageBase):
     
     """Simple Moving Average - calculates the average price over 'n' periods.
     
@@ -78,7 +78,7 @@ class SMA(SimpleMovingAverage):
     """Alias for use within functions"""
 
 
-class SmoothedMovingAverage(Indicator):
+class SmoothedMovingAverage(MovingAverageBase):
 
     """Smoothed Moving Average - similar to EMA, applies a weighting factor to
     each data point in the moving average sum, favouring the most recent. The
@@ -129,7 +129,7 @@ class SMMA(SmoothedMovingAverage):
     """Alias for use within functions"""
 
 
-class ExponentialMovingAverage(Indicator):
+class ExponentialMovingAverage(MovingAverageBase):
     
     """Exponential Moving Average - applies a weighting factor to each data
     point in the moving average sum, favouring the most recent. The weighting
@@ -180,7 +180,7 @@ class EMA(ExponentialMovingAverage):
     """Alias for use within functions"""
 
 
-class DoubleExponentialMovingAverage(Indicator):
+class DoubleExponentialMovingAverage(MovingAverageBase):
 
     """Double Exponential Moving Average - attempts to reduce the lag associated
     with with moving averages by applying additional weight on recent data
@@ -236,7 +236,7 @@ class DoubleEMA(DoubleExponentialMovingAverage):
     """Alias for use within functions"""
 
 
-class TripleExponentialMovingAverage(Indicator):
+class TripleExponentialMovingAverage(MovingAverageBase):
 
     """Triple Exponential Moving Average - attempts to reduce the lag associated
     with with moving averages by applying additional weight on recent data
@@ -294,7 +294,7 @@ class TripleEMA(TripleExponentialMovingAverage):
     """Alias for use within functions"""
 
 
-class WeightedMovingAverage(Indicator):
+class WeightedMovingAverage(MovingAverageBase):
 
     """Weighted Moving Average - applies a fixed weighting to the moving
     average, greatest at the most recent data point, decreasing
@@ -347,7 +347,7 @@ class WMA(WeightedMovingAverage):
     """Alias for use within functions"""
 
 
-class HullMovingAverage(Indicator):
+class HullMovingAverage(MovingAverageBase):
 
     """Hull Moving Average - derived from the weighted moving average with the
     objective of further reducing lag and improving smoothness.
@@ -405,7 +405,7 @@ class HMA(HullMovingAverage):
     """Alias for use within functions"""
 
 
-class DicksonMovingAverage(Indicator):
+class DicksonMovingAverage(MovingAverageBase):
 
     """Dickson Moving Average - attempts to replicate the accuracy of a
     technique known as the Jurik Moving Average by combining the Zero Lag
@@ -448,7 +448,7 @@ class DicksonMovingAverage(Indicator):
               ('gainlimit', 50),
               ('hull_period', 7),
               ('_movav', MovAv.Exponential),
-              ('_hma', MovAv.HMA))
+              ('_hma', MovAv.Exponential))
 
     plotinfo = dict(subplot=False)
     plotlines = dict(dma=dict(color='navy'))
@@ -604,7 +604,7 @@ class ZeroLagExponentialMovingAverage(MovingAverageBase):
         super(ZeroLagExponentialMovingAverage, self).__init__()
 
 
-class TriangularMovingAverage(Indicator):
+class TriangularMovingAverage(MovingAverageBase):
 
     """Triangular Moving Average - a second order simple moving average with a
     weighted component, the increments of which are assigned in a triangular

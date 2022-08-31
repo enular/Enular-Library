@@ -5,6 +5,6 @@ from .analyzers import *
 
 from . import indicators as indicators
 from . import strategies as strategies
-from . import lib as lib
+from . import backtrader as backtrader
 
 
