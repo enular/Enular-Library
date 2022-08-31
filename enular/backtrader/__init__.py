@@ -66,8 +66,8 @@ from .flt import *
 from . import utils as utils
 
 from . import feeds as feeds
-from . import indicators as indicators
-from . import indicators as ind
+import indicators as indicators
+import indicators as ind
 from . import studies as studies
 from . import strategies as strategies
 from . import strategies as strats
@@ -86,5 +86,5 @@ from . import timer as timer
 from . import talib as talib
 
 # Load contributed indicators and studies
-import backtrader.indicators.contrib
+import indicators.contrib
 import backtrader.studies.contrib
