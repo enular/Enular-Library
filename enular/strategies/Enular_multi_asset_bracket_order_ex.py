@@ -4,6 +4,9 @@ import yahoo_fin.stock_info as si
 import datetime
 from backtrader.indicators import DMA
 
+from backtrader.analyzers.tradelist import TradeList as TradeList
+from tabulate import tabulate
+
 class Enular_Strategy_Example(bt.Strategy):
 
     params = dict(hold = [20, 20, 20],
@@ -171,6 +174,7 @@ if __name__ == '__main__':
     cerebro.broker.set_slippage_perc(perc=0.001)
     cerebro.addsizer(bt.sizers.FixedSize, stake=50)
     cerebro.addstrategy(Enular_Strategy_Example)
+    cerebro.addanalyzer(TradeList, _name="trade")
 
     data0 = bt.feeds.PandasData(dataname=si.get_data("TSLA",
                                                     start_date="01/01/2020",
@@ -199,10 +203,13 @@ if __name__ == '__main__':
         cerebro.adddata(data, name=datalist[i][1])
 
     initial_value = cerebro.broker.getvalue()
-    cerebro.run()
+    thestrat = cerebro.run(tradehistory=True)
     final_value = cerebro.broker.getvalue()
     pnl = final_value - initial_value
     pnl = round(pnl, 2)
+
+    trade_list = thestrat[0].analyzers.trade.get_analysis()
+    print (tabulate(trade_list, headers="keys"))
 
     print(f'Initial Portfolio Value: ${initial_value:2f}')
     print(f'Final Portfolio Value: ${final_value:2f}')

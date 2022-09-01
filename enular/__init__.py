@@ -1,5 +1,5 @@
 from .base import *
-from .analyzers import *
+from ._analyzers import *
 
 
 from . import indicators as indicators
