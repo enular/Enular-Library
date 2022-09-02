@@ -100,7 +100,7 @@ class PlotScheme(object):
         self.rowsminor = 1
 
         # Distance in between subcharts
-        self.plotdist = 0.0
+        self.plotdist = 0.1
 
         # Have a grid in the background of all charts
         self.grid = True
@@ -112,21 +112,21 @@ class PlotScheme(object):
         # Default color for the 'line on close' plot
         self.loc = 'black'
         # Default color for a bullish bar/candle (0.75 -> intensity of gray)
-        self.barup = '0.75'
+        self.barup = "limegreen"
         # Default color for a bearish bar/candle
-        self.bardown = 'red'
+        self.bardown = "crimson"
         # Level of transparency to apply to bars/cancles (NOT USED)
         self.bartrans = 1.0
 
         # Wether the candlesticks have to be filled or be transparent
-        self.barupfill = True
+        self.barupfill = False
         self.bardownfill = True
 
         # Opacity for the filled candlesticks (1.0 opaque - 0.0 transparent)
-        self.baralpha = 1.0
+        self.baralpha = 0.6
 
         # Alpha blending for fill areas between lines (_fill_gt and _fill_lt)
-        self.fillalpha = 0.20
+        self.fillalpha = 0.30
 
         # Wether to plot volume or not. Note: if the data in question has no
         # volume values, volume plotting will be skipped even if this is True
@@ -135,15 +135,15 @@ class PlotScheme(object):
         # Wether to overlay the volume on the data or use a separate subchart
         self.voloverlay = True
         # Scaling of the volume to the data when plotting as overlay
-        self.volscaling = 0.33
+        self.volscaling = 0.3
         # Pushing overlay volume up for better visibiliy. Experimentation
         # needed if the volume and data overlap too much
-        self.volpushup = 0.00
+        self.volpushup = 0.1
 
         # Default colour for the volume of a bullish day
-        self.volup = '#aaaaaa'  # 0.66 of gray
+        self.volup = "lightgreen"
         # Default colour for the volume of a bearish day
-        self.voldown = '#cc6073'  # (204, 96, 115)
+        self.voldown = "salmon"
         # Transparency to apply to the volume when overlaying
         self.voltrans = 0.50
 

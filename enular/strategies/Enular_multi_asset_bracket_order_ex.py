@@ -215,4 +215,4 @@ if __name__ == '__main__':
     print(f'Final Portfolio Value: ${final_value:2f}')
     print(f'Profit and Loss: ${pnl:2f}')
 
-    cerebro.plot()
+    cerebro.plot(style="darkcandle")

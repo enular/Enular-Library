@@ -82,5 +82,8 @@ from .kst import *
 from .ichimoku import *
 from .vortex import *
 
-# from .indicators_operations import *
-# from .indicators_library import *
+from .indicators_operations import *
+from .indicators_library import *
+
+from .zig_zag import *
+from .haar_wavelet import *

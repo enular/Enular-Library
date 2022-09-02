@@ -134,6 +134,12 @@ class Plot_OldSync(with_metaclass(MetaParams, object)):
         self.sortdataindicators(strategy)
         self.calcrows(strategy)
 
+        if self.pinf.sch.style.startswith("dark"):
+            self.mpyplot.rcParams["axes.facecolor"] = "lightslategrey"
+
+        else:
+            self.mpyplot.rcParams["axes.facecolor"] = "#DCE3EF"
+
         st_dtime = strategy.lines.datetime.plot()
         if start is None:
             start = 0
@@ -165,6 +171,13 @@ class Plot_OldSync(with_metaclass(MetaParams, object)):
         for numfig in range(numfigs):
             # prepare a figure
             fig = self.pinf.newfig(figid, numfig, self.mpyplot)
+
+            if self.pinf.sch.style.startswith("dark"):
+                fig.patch.set_facecolor("lightslategrey")
+
+            else:
+                fig.patch.set_facecolor("white")
+
             figs.append(fig)
 
             self.pinf.pstart, self.pinf.pend, self.pinf.psize = pranges[numfig]
@@ -486,9 +499,14 @@ class Plot_OldSync(with_metaclass(MetaParams, object)):
                 linetag = lineplotinfo._get('_plotvaluetag', True)
                 if linetag and not math.isnan(lplot[-1]):
                     # line has valid values, plot a tag for the last value
-                    self.drawtag(ax, len(self.pinf.xreal), lplot[-1],
-                                 facecolor='white',
-                                 edgecolor=self.pinf.color(ax))
+                    if self.pinf.sch.style.startswith("dark"):
+                        self.drawtag(ax, len(self.pinf.xreal), lplot[-1],
+                                facecolor='lightgrey',
+                                edgecolor=self.pinf.color(ax))
+                    else:
+                        self.drawtag(ax, len(self.pinf.xreal), lplot[-1],
+                                facecolor='white',
+                                edgecolor=self.pinf.color(ax))
 
             farts = (('_gt', operator.gt), ('_lt', operator.lt), ('', None),)
             for fcmp, fop in farts:
@@ -704,34 +722,71 @@ class Plot_OldSync(with_metaclass(MetaParams, object)):
             plotted = plot_lineonclose(
                 ax, self.pinf.xdata, closes,
                 color=color, label=datalabel)
+
+        elif self.pinf.sch.style.startswith("darkline"):
+            if self.pinf.sch.linevalues and plinevalues:
+                datalabel += ' C:%.2f' % closes[-1]
+
+            if axdatamaster is None:
+                color = self.pinf.sch.loc
+            else:
+                self.pinf.nextcolor(axdatamaster)
+                color = self.pinf.color(axdatamaster)
+
+            plotted = plot_lineonclose(
+                ax, self.pinf.xdata, closes,
+                color=color, label=datalabel)
+
         else:
             if self.pinf.sch.linevalues and plinevalues:
                 datalabel += ' O:%.2f H:%.2f L:%.2f C:%.2f' % \
                              (opens[-1], highs[-1], lows[-1], closes[-1])
-            if self.pinf.sch.style.startswith('candle'):
-                plotted = plot_candlestick(
-                    ax, self.pinf.xdata, opens, highs, lows, closes,
-                    colorup=self.pinf.sch.barup,
-                    colordown=self.pinf.sch.bardown,
-                    label=datalabel,
-                    alpha=self.pinf.sch.baralpha,
-                    fillup=self.pinf.sch.barupfill,
-                    filldown=self.pinf.sch.bardownfill)
+            if self.pinf.sch.style.startswith("dark"):
+                if self.pinf.sch.style.startswith("darkcandle"):
+                    plotted = plot_candlestick(
+                        ax, self.pinf.xdata, opens, highs, lows, closes,
+                        colorup=self.pinf.sch.barup,
+                        colordown=self.pinf.sch.bardown,
+                        label=datalabel,
+                        alpha=self.pinf.sch.baralpha,
+                        fillup=self.pinf.sch.barupfill,
+                        filldown=self.pinf.sch.bardownfill)
 
-            elif self.pinf.sch.style.startswith('bar') or True:
-                # final default option -- should be "else"
-                plotted = plot_ohlc(
-                    ax, self.pinf.xdata, opens, highs, lows, closes,
-                    colorup=self.pinf.sch.barup,
-                    colordown=self.pinf.sch.bardown,
-                    label=datalabel)
+                elif self.pinf.sch.style.startswith("darkbar") or True:
+                    plotted = plot_ohlc(
+                        ax, self.pinf.xdata, opens, highs, lows, closes,
+                        colorup=self.pinf.sch.barup,
+                        colordown=self.pinf.sch.bardown,
+                        label=datalabel)
+                
+            else:
+                if self.pinf.sch.style.startswith('candle'):
+                    plotted = plot_candlestick(
+                        ax, self.pinf.xdata, opens, highs, lows, closes,
+                        colorup=self.pinf.sch.barup,
+                        colordown=self.pinf.sch.bardown,
+                        label=datalabel,
+                        alpha=self.pinf.sch.baralpha,
+                        fillup=self.pinf.sch.barupfill,
+                        filldown=self.pinf.sch.bardownfill)
+
+                elif self.pinf.sch.style.startswith('bar') or True:
+                    plotted = plot_ohlc(
+                        ax, self.pinf.xdata, opens, highs, lows, closes,
+                        colorup=self.pinf.sch.barup,
+                        colordown=self.pinf.sch.bardown,
+                        label=datalabel)
 
         self.pinf.zorder[ax] = plotted[0].get_zorder()
 
         # Code to place a label at the right hand side with the last value
         vtags = data.plotinfo._get('plotvaluetags', True)
         if self.pinf.sch.valuetags and vtags:
-            self.drawtag(ax, len(self.pinf.xreal), closes[-1],
+            if self.pinf.sch.style.startswith("dark"):
+                self.drawtag(ax, len(self.pinf.xreal), closes[-1],
+                         facecolor='lightgrey', edgecolor=self.pinf.sch.loc)
+            else:
+                self.drawtag(ax, len(self.pinf.xreal), closes[-1],
                          facecolor='white', edgecolor=self.pinf.sch.loc)
 
         ax.yaxis.set_major_locator(mticker.MaxNLocator(prune='both'))
