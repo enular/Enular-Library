@@ -2,7 +2,7 @@
  
 pip install enular
 
-NOTE: Alpha version and development in progress. Expect beta release in late 2022.
+NOTE: Pre-alpha version (v0.2.3) and development in progress. Expect beta release in late 2022.
 
 The Enular Library contains tools for backtesting, evaluating and visualising algorithmic trading strategies. It allows the user to easily combine indicators with complex operations into strategies, similar to neural networks. It also provides indicators, data sources, and paper trading capabilities. Documentation coming soon. Enular.com
 
