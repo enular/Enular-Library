@@ -2,12 +2,12 @@
  
 pip install enular
 
-NOTE: Pre-alpha version (v0.2.3) and development in progress. Expect beta release in late 2022.
+NOTE: Alpha version (v1.0.0) and development in progress. Expect beta release in late 2023.
 
 The Enular Library contains tools for backtesting, evaluating and visualising algorithmic trading strategies. It allows the user to easily combine indicators with complex operations into strategies, similar to neural networks. It also provides indicators, data sources, and paper trading capabilities. Documentation coming soon. Enular.com
 
 Details:
-- Uses Backtrader's Cerebro engine with fixes from Backtrader2
+- Uses parts of Backtrader's Cerebro engine with fixes from Backtrader2
 - Data streaming from Yahoo Finance
 - Indicator and strategy collection
 - Improve accessiblity with simplified architecture
