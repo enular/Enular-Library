@@ -1,27 +1,14 @@
 from __future__ import (absolute_import, division, print_function, unicode_literals)
+from backtrader import backtrader as bt
+#import backtrader as bt
 
-#!/usr/bin/env python
-import os
-import io
-import sys
-
-from datetime import date, datetime
-import matplotlib
-import yfinance as yf
-import numpy
-import scipy
-import sklearn
-import pandas
-import backtrader as bt
-import webbrowser
-import quantstats
 
 #Dependencies for Yahoo data streamer
 from backtrader.utils.py3 import (urlopen, urlquote, ProxyHandler, build_opener, install_opener)
-import collections
-import itertools
 from backtrader import feed
 from backtrader.utils import date2num
+
+from . import qslib
 
 if __name__ == '__main__':
     print ('Do not run this file.')
@@ -30,13 +17,17 @@ if __name__ == '__main__':
 
 class Cerebro(bt.Cerebro):  
     
-    def quantstats(self, results):
+    def quantstats(self, results, qsids):
             strat = results[0]
             portfolio_stats = strat.analyzers.getbyname('PyFolio')
             returns, positions, transactions, gross_lev = portfolio_stats.get_pf_items()
             returns.index = returns.index.tz_convert(None)
-            quantstats.reports.html(returns, output='stats.html', title='BTC Sentiment', download_filename='stats.html')
-            webbrowser.open('file://' + os.path.realpath('stats.html'))
+
+            qsids_output = qsids + 'stats.html'
+            qsids_download_filename = '/home/ubuntu/django/Enular/templates/stats/' + qsids + 'stats.html'
+
+            qslib.reports.html(returns, output=qsids_output, title='Results', download_filename=qsids_download_filename)
+            #webbrowser.open('file://' + os.path.realpath('stats.html'))
 
 class Dummy(bt.Indicator):    
     

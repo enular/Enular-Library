@@ -8,9 +8,8 @@ import scipy
 import sklearn
 import pandas
 import backtrader as bt
-import indicators
-
-import enular
+import enularlib.indicators as indicators
+import enularlib
 
 #Scalar
 #Formula:   AcdDecOsc = AwesomeOscillator - SMA(AwesomeOscillator, period)
@@ -48,7 +47,7 @@ class BollingerBands(indicators.BollingerBands):
 
 #Scalar
 #Scale:     Percentage
-class BollingerBandsPerc(bt.indicators.BBPerc):
+class BollingerBandsPerc(indicators.BBPerc):
     pass
 
 #Scalar    
@@ -118,7 +117,7 @@ class ExponentialMovingAverage(indicators.ExponentialMovingAverage):
     pass
 
 #Scalar
-class Envelope(bt.indicators.Envelope):
+class Envelope(indicators.Envelope):
     pass
 
 #Scalar:
@@ -298,19 +297,19 @@ class CrossOver(indicators.CrossOver):
         self.data0 = SMAFast(self.data, period = self.params.pfast)
         self.data1 = SMASlow(self.data, period = self.params.pslow)
 
-        upcross = bt.indicators.CrossUp(self.data0, self.data1)
-        downcross = bt.indicators.CrossDown(self.data0, self.data1)
+        upcross = indicators.CrossUp(self.data0, self.data1)
+        downcross = indicators.CrossDown(self.data0, self.data1)
 
         self.lines.crossover = upcross - downcross
 
 #Boolean
-class MachineLearningClassify(enular.IndicatorOperation):    
-
-    def __init__(self):
-        pass
+#class MachineLearningClassify(enularlib.IndicatorOperation):    
+#    def __init__(self):
+#
+#        pass
 
 #Scalar
-class MachineLearningRegression(enular.IndicatorOperation):    
-
-    def __init__(self):
-        pass
+#class MachineLearningRegression(enularlib.IndicatorOperation):    
+#
+#    def __init__(self):
+#        pass
